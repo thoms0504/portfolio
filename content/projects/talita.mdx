@@ -1,0 +1,18 @@
+---
+title: "TALITA (StatistiKita)"
+slug: "talita"
+summary: "AI-powered statistics service portal for BPS Provinsi Lampung: RAG chatbot, consultation booking, live chat and a Q&A forum in one place."
+category: "Web"
+featured: true
+order: 1
+period:
+  start: "2026-04"
+  end: ""
+stack: ["Python", "FastAPI", "Next.js", "TypeScript", "Tailwind CSS", "MySQL", "PostgreSQL", "LangChain", "Pinecone", "Grok API", "Socket.IO", "Docker", "Nginx"]
+repoUrl: "https://github.com/thoms0504/statistikita"
+demoUrl: "https://talita.statapps.dev/"
+---
+
+TALITA is a digital service portal for BPS Provinsi Lampung that replaces manual and WhatsApp-based statistical consultations with one platform the public can use directly.
+
+Main features: an AI chatbot that answers from BPS documents using retrieval-augmented generation (LangChain + Pinecone + Grok) with table-aware PDF retrieval, a curated FAQ base, voice input and rate limiting, Zoom consultation booking with conflict detection, a StackOverflow-style Q&A forum with voting and moderation, real-time 1:1 live support chat with Socket.IO notifications, Google sign-in, and an admin panel for multi-PDF ingestion, user management and analytics. The backend is FastAPI with async SQLAlchemy and Alembic, deployed with Docker Compose behind Nginx.

@@ -1,0 +1,18 @@
+---
+title: "SIMONA BPS"
+slug: "simona"
+summary: "Monitoring system for BPS Lampung that turns survey, news and business-classification data into interactive dashboards."
+category: "Web"
+featured: true
+order: 2
+period:
+  start: "2026-05"
+  end: ""
+stack: ["Python", "Django", "MySQL", "JavaScript", "HTML", "CSS", "ApexCharts", "Pinecone", "Docker"]
+repoUrl: ""
+demoUrl: "https://simona.statapps.dev/"
+---
+
+SIMONA helps BPS Provinsi Lampung monitor field surveys and the phenomena behind the numbers, such as news about commodities and industries in the province, in one dashboard instead of scattered spreadsheets.
+
+Main features: monitoring of many survey types (SKTH, SKTR, clean water, mining and captive power, among others) with import/export templates, deadlines and an Open to Completed review workflow; animated dashboards and KPI cards for progress by district; a news "fenomena" module with automatic RSS collection from regional outlets, topic wordcloud, sentiment tagging and monthly summaries; and an LKE IMK module with batch 5-digit KBLI suggestions powered by Pinecone embeddings, manual/final KBLI fields and Excel upload. It has province, district admin and field-officer roles and a light/dark theme. The backend is Django REST Framework on MariaDB, deployed with Docker.

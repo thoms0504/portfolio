@@ -1,0 +1,18 @@
+---
+title: "CERDAS"
+slug: "cerdas"
+summary: "Recommendation system that matches civil-servant (CASN) candidates to positions and formations by meaning, not just keywords."
+category: "Data/AI"
+featured: true
+order: 5
+period:
+  start: "2025-11"
+  end: ""
+stack: ["Python", "FastAPI", "sentence-transformers", "scikit-learn", "Pandas", "Gemini API", "Next.js", "TypeScript", "Tailwind CSS", "Streamlit"]
+repoUrl: "https://github.com/thoms0504/CERDAS"
+demoUrl: "https://cerdas-ai.streamlit.app/"
+---
+
+CERDAS is a decision-assistance system for CASN recruitment. It recommends positions to candidates, and candidates to an institution's requirements, using semantic similarity so that different wording for the same skill still matches.
+
+Main features: candidate profiles (education, major, expected salary, province, experience, desired job) embedded with multilingual sentence transformers and ranked by cosine similarity, an institution-to-employee matching mode, a statistics dashboard, and an AI chatbot (Gemini) available in both candidate and job-requirement modes. The first version is a Streamlit app; a newer rewrite uses a FastAPI backend and a Next.js frontend.

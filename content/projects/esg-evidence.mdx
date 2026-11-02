@@ -1,0 +1,18 @@
+---
+title: "ESG Evidence Extraction"
+slug: "esg-evidence"
+summary: "Finds ESG evidence inside banks' sustainability reports based on a scoring checklist, using hybrid retrieval and RAG."
+category: "Data/AI"
+featured: false
+order: 11
+period:
+  start: "2026-07"
+  end: ""
+stack: ["Python", "Flask", "PyMuPDF", "ChromaDB", "sentence-transformers", "Gemini API", "openpyxl"]
+repoUrl: ""
+demoUrl: ""
+---
+
+Assessing a bank's ESG performance normally means reading hundreds of pages of sustainability report by hand. This app finds the relevant evidence for each checklist item automatically.
+
+Main features: page-aware PDF chunking with company and year metadata, multilingual embeddings stored in ChromaDB, two-stage hybrid retrieval (semantic, lexical and justification scoring with a reranker), a 44-item bilingual checklist, rule-based or LLM evidence synthesis (Gemini or OpenRouter), a full-text scan to catch missed evidence, a regression check against golden sets, live progress streaming, document management per company and year, and Excel/Word export for review.

@@ -1,0 +1,18 @@
+---
+title: "MRI Survey"
+slug: "mri"
+summary: "Timed employee assessment (Motivasi, Relasi, Impak) with per-person AI summaries, admin analytics and PDF reports."
+category: "Web"
+featured: false
+order: 8
+period:
+  start: "2026-04"
+  end: ""
+stack: ["Python", "Flask", "Grok API", "Plotly", "Pandas", "xhtml2pdf"]
+repoUrl: "https://github.com/thoms0504/MRI"
+demoUrl: "https://mrisurvey.statapps.dev/"
+---
+
+MRI is a web survey that measures three dimensions of an employee's profile (motivation, relations and impact) and turns the answers into a readable report.
+
+Main features: a 12-minute countdown survey paged 20 questions at a time, scoring per aspect with top-10 and bottom-5 questions, an AI-written summary per respondent (xAI Grok) with a local fallback when the API is busy, automatic biodata sync from the Wawai API, and an admin panel with Plotly analytics (radar, trends, per-unit and per-employee drill-down), master-employee management and PDF export. Data is stored as CSV files, so no database is needed.

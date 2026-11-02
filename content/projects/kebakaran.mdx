@@ -1,0 +1,18 @@
+---
+title: "Forest Fire Early Detection, Riau"
+slug: "kebakaran"
+summary: "Satellite data pipeline with machine learning models that classifies forest-fire risk and estimates burned area in Riau."
+category: "Data/AI"
+featured: false
+order: 12
+period:
+  start: "2026-05"
+  end: ""
+stack: ["Python", "Google Earth Engine", "TensorFlow", "scikit-learn", "Folium", "Plotly", "Streamlit"]
+repoUrl: "https://github.com/thoms0504/estimation-fireforest-riau"
+demoUrl: ""
+---
+
+Riau's peatlands are among Indonesia's most fire-prone areas. This project uses eleven years of satellite data (2015-2025, 132 months) to estimate fire risk before fires start rather than after.
+
+Main features: a monthly dataset from MODIS (burned area, land surface temperature, NDVI), CHIRPS rainfall and ERA5 wind exported through Google Earth Engine, a Fire Risk Index and a 0-4 fire-trigger score (drought, extreme heat, dry vegetation, strong wind), a comparison of several classifiers (Random Forest, Gradient Boosting, Extra Trees, SVM, Logistic Regression) with time-series cross-validation, burned-area estimation with a Random Forest regressor and an optional Bidirectional LSTM, feature importance, monthly 2026 estimates, and a six-menu Streamlit dashboard with hotspot maps focused on the seven highest-risk districts and a data-quality audit.

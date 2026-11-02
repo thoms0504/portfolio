@@ -1,0 +1,134 @@
+{
+  "name": "Thomson Sibuea",
+  "headline": "Data Scientist and IT Specialist at BPS Provinsi Lampung. I build data pipelines, ML and GeoAI applications, and the web platforms around them.",
+  "about": "I am a civil servant at Statistics Indonesia (BPS) Provinsi Lampung, working as an IT Specialist in the IPDS Division (Integration, Processing and Dissemination of Statistics) since finishing my bachelor's degree in Computational Statistics at Politeknik Statistika STIS in 2024.\n\nMy work sits where official statistics, the environment and technology meet. I build web applications that simplify day-to-day office work, and I use remote sensing, machine learning, deep learning and LLMs with retrieval (RAG) to produce better, faster and more granular official data. Projects here range from AI chatbots and recommendation systems to survey monitoring dashboards, queue and HR platforms, and a satellite-based forest-fire risk estimation pipeline.\n\nBefore BPS Lampung I worked as a data analyst for the Ministry of Industry of the Republic of Indonesia, analysing export and import trends, and did an IT internship at BPS Kota Cilegon. My bachelor's thesis estimated potential drought areas from satellite imagery with machine learning.",
+  "location": "Lampung, Indonesia",
+  "email": "sibueathomson@gmail.com",
+  "githubRepos": 29,
+  "links": {
+    "github": "https://github.com/thoms0504",
+    "linkedin": "https://www.linkedin.com/in/thomsonsibuea/",
+    "whatsapp": "https://wa.me/628987791199",
+    "instagram": "https://www.instagram.com/thomsibuea",
+    "orcid": "https://orcid.org/0009-0005-0436-4009"
+  },
+  "experience": [
+    {
+      "company": "Badan Pusat Statistik (BPS) Provinsi Lampung",
+      "role": "IT Specialist",
+      "type": "Full-time",
+      "period": "Dec 2024 - Present",
+      "location": "Lampung, Indonesia · On-site",
+      "description": "Building web applications for BPS Lampung and applying remote sensing, machine learning, deep learning and GeoAI to official statistics. Work includes survey monitoring (SIMONA), the TALITA statistics service portal, the WAWAI employee profile platform, queue and guest-book systems, and RAG-based assistants.",
+      "highlights": [
+        "Create and monitor 5-6 statistical contents such as infographics every month.",
+        "Perform information technology services to internal agencies.",
+        "Perform statistical processing and dissemination through quality statistical products.",
+        "Responsible for the correction and updating of the agency website.",
+        "Conduct data processing related to surveys and censuses."
+      ]
+    },
+    {
+      "company": "Kementerian Perindustrian Republik Indonesia",
+      "role": "Data Analyst",
+      "type": "Contract",
+      "period": "Mar 2024 - Dec 2024",
+      "location": "Jakarta, Indonesia · Remote",
+      "description": "",
+      "highlights": [
+        "With a partner, found and processed data on the development of exports and imports in Indonesia for 50+ types of Harmonized System (HS) Code, and identified potential industries for Indonesia in the next few years.",
+        "Packaged the collected data into informative tables and graphs to provide business insight for the agency.",
+        "Reminded 100+ stakeholders from various industries to report their production activities monthly."
+      ]
+    },
+    {
+      "company": "Badan Pusat Statistik (BPS) Kota Cilegon",
+      "role": "IT Technician",
+      "type": "Internship",
+      "period": "Aug 2023 - Oct 2023",
+      "location": "Cilegon, Banten, Indonesia · On-site",
+      "description": "",
+      "highlights": [
+        "Inputted and confirmed survey data from 50+ accommodation companies from paper forms into the website.",
+        "Produced and edited a video showcasing the achievements of exemplary statisticians, enhancing recognition and motivation among the staff at BPS Cilegon City.",
+        "With my team, conducted ground checks related to the enumeration of socio-economic registration (Regsosek) data in 5 sub-districts in Cilegon City.",
+        "With an internship partner, designed the honorarium system for BPS Cilegon partners using Google Form, Google Sheets and Looker Studio, used to help 30+ partners."
+      ]
+    },
+    {
+      "company": "Politeknik Statistika STIS",
+      "role": "Web Developer",
+      "type": "Full-time",
+      "period": "Dec 2022 - Aug 2023",
+      "location": "Jakarta, Indonesia · Hybrid",
+      "description": "",
+      "highlights": [
+        "With my team, built a dashboard website for the results of field work practices (Praktik Kerja Lapangan) using CodeIgniter 4 as the framework. The dashboard presents research conducted in the field work practice, divided into 4 studies."
+      ]
+    },
+    {
+      "company": "Politeknik Statistika STIS",
+      "role": "Data Analyst",
+      "period": "Mar 2023 - Jun 2023",
+      "location": "Jakarta, Indonesia",
+      "description": "",
+      "highlights": [
+        "With my team, created 20+ graphs and tables for research in the field practice activities and posted them to the field practice dashboard website."
+      ]
+    },
+    {
+      "company": "Badan Pusat Statistik (BPS)",
+      "role": "Field Data Verifier",
+      "type": "Contract",
+      "period": "Feb 2023",
+      "location": "Jakarta, Indonesia · On-site",
+      "description": "Cross-verified and validated data from the Socio-Economic Registration (REGSOSEK) survey so that it stayed correct and consistent with real conditions. The role required face-to-face interaction with respondents, including in-depth interviews to validate the correctness of their answers, with accuracy, good communication skills and a steadfast commitment to data standards."
+    }
+  ],
+  "education": [
+    {
+      "institution": "Politeknik Statistika STIS",
+      "degree": "Bachelor of Applied Science (S.Tr.Stat.), Computational Statistics",
+      "period": "2020 - 2024",
+      "description": "Thesis: Estimation of Potential Drought Areas Using Machine Learning Approach: Satellite Imagery",
+      "highlights": [
+        "Komputasi.Net (Programming)",
+        "Descent STIS (Data Science)",
+        "Bulstik STIS (Badminton)"
+      ]
+    },
+    {
+      "institution": "Institut Teknologi Sepuluh Nopember (ITS)",
+      "degree": "Bachelor's degree, Ocean Engineering",
+      "period": "Jun 2019 - Jul 2020",
+      "description": "First-year student. GPA 3.58."
+    }
+  ],
+  "certifications": [],
+  "skills": {
+    "languages": ["Python", "JavaScript", "TypeScript", "R", "PHP", "SQL", "HTML", "CSS"],
+    "frameworks": [
+      "React",
+      "Next.js",
+      "Vue.js",
+      "Inertia.js",
+      "Tailwind CSS",
+      "Bootstrap",
+      "Radix UI",
+      "Vite",
+      "Node.js",
+      "Flask",
+      "FastAPI",
+      "Django",
+      "Laravel",
+      "CodeIgniter",
+      "Streamlit",
+      "Socket.IO",
+      "Prisma"
+    ],
+    "databases": ["MySQL", "PostgreSQL", "SQLite", "PostGIS", "Supabase", "Google Sheets", "ChromaDB", "Pinecone"],
+    "ai": ["TensorFlow", "PyTorch", "scikit-learn", "OpenCV", "Pandas", "NumPy", "Jupyter", "LangChain", "Gemini API"],
+    "geospatial": ["Google Earth Engine", "QGIS", "GeoPandas", "Rasterio", "GDAL", "Leaflet", "Folium"],
+    "tools": ["Docker", "Git", "GitHub", "VS Code", "Google Cloud", "Google Apps Script", "Postman", "Vercel"]
+  }
+}
