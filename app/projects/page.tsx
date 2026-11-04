@@ -15,7 +15,7 @@ export default function ProjectsPage() {
       <p className="eyebrow mb-4">Portfolio</p>
       <h1 className="text-h1 mb-3">Projects</h1>
       <p className="mb-10 max-w-prose text-body text-muted">
-        {projects.length} projects. Klik kartu untuk melihat deskripsi, tech stack, dan dokumentasi.
+        {projects.length} projects. Click a card to see the description, tech stack, and documentation.
       </p>
       <ProjectsClient projects={projects} />
     </div>
