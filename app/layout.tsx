@@ -59,15 +59,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <footer className="border-t border-line bg-surface">
-          <div className="max-w-content mx-auto page-px py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-small text-muted">
-            <div>
-              <span className="font-semibold" style={{ color: 'var(--text)' }}>Thomson Sibuea</span>
-              <span className="ml-2 opacity-60">· Data Scientist & Full-Stack Developer</span>
+          <div className="max-w-content mx-auto page-px py-10 flex flex-col gap-6 text-small text-muted">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <span className="font-semibold" style={{ color: 'var(--text)' }}>Thomson Sibuea</span>
+                <span className="ml-2 opacity-60">· Data Scientist & Full-Stack Developer</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <span className="opacity-60">Lampung, Indonesia</span>
+              </div>
             </div>
-            <div className="flex items-center gap-4">
-              <span className="opacity-60">Lampung, Indonesia</span>
-              
-            </div>
+            <p className="border-t border-line pt-6 opacity-60">
+              &copy; {new Date().getFullYear()} Thomson Sibuea. All rights reserved.
+            </p>
           </div>
         </footer>
       </body>
