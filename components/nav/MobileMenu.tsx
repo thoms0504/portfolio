@@ -6,10 +6,17 @@ import { X } from 'lucide-react'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { cn } from '@/lib/cn'
 
+export interface NavLink {
+  href: string
+  label: string
+  /** Optional small tag shown next to the label, e.g. "Soon". */
+  badge?: string
+}
+
 interface MobileMenuProps {
   open: boolean
   onClose: () => void
-  links: Array<{ href: string; label: string }>
+  links: NavLink[]
   pathname: string
 }
 
@@ -60,7 +67,7 @@ export function MobileMenu({ open, onClose, links, pathname }: MobileMenuProps) 
 
       {/* Links */}
       <nav aria-label="Mobile navigation" className="flex flex-col gap-1 p-6">
-        {links.map(({ href, label }) => {
+        {links.map(({ href, label, badge }) => {
           const active = pathname === href || pathname.startsWith(href + '/')
           return (
             <Link
@@ -73,6 +80,11 @@ export function MobileMenu({ open, onClose, links, pathname }: MobileMenuProps) 
               )}
             >
               {label}
+              {badge && (
+                <span className="ml-2 rounded-full border border-line bg-surface-2 px-2 py-0.5 align-middle text-[0.6875rem] font-medium uppercase leading-none tracking-wide text-muted">
+                  {badge}
+                </span>
+              )}
             </Link>
           )
         })}
