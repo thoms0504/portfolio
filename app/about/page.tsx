@@ -3,11 +3,11 @@ import Image from 'next/image'
 import { getProfile } from '@/lib/profile'
 import { ExperienceTimeline, EducationTimeline } from '@/components/timeline/Timeline'
 import { SkillGroup } from '@/components/skills/SkillGroup'
-import { Tag } from '@/components/ui/Tag'
+import { CertificationList } from '@/components/certifications/CertificationList'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'Background, experience, education, and skills of Thomson Sibuea, software engineer.',
+  description: 'Background, experience, education, certifications, and skills of Thomson Sibuea, software engineer.',
 }
 
 export default function AboutPage() {
@@ -79,17 +79,7 @@ export default function AboutPage() {
             <h2 id="cert-heading" className="text-h2 mb-8">
               Certifications
             </h2>
-            <ul className="flex flex-col gap-4">
-              {profile.certifications.map((cert, i) => (
-                <li key={i} className="flex items-start justify-between gap-6">
-                  <div>
-                    <p className="text-body text-text font-medium">{cert.name}</p>
-                    <p className="text-small text-muted">{cert.issuer}</p>
-                  </div>
-                  <span className="text-small text-muted tabular-nums flex-shrink-0">{cert.year}</span>
-                </li>
-              ))}
-            </ul>
+            <CertificationList items={profile.certifications} />
           </section>
         )}
 
