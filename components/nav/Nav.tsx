@@ -5,12 +5,14 @@ import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { Menu } from 'lucide-react'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
-import { MobileMenu } from './MobileMenu'
+import { MobileMenu, type NavLink } from './MobileMenu'
 import { cn } from '@/lib/cn'
 
-const navLinks = [
+const navLinks: NavLink[] = [
   { href: '/projects', label: 'Projects' },
   { href: '/about', label: 'About' },
+  { href: '/certifications', label: 'Certifications' },
+  { href: '/articles', label: 'Articles', badge: 'Soon' },
   { href: '/resume', label: 'Resume' },
 ]
 
@@ -46,8 +48,8 @@ export function Nav() {
           </Link>
 
           {/* Desktop nav */}
-          <nav aria-label="Main navigation" className="hidden md:flex items-center gap-1">
-            {navLinks.map(({ href, label }) => {
+          <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-1">
+            {navLinks.map(({ href, label, badge }) => {
               const active = pathname === href || pathname.startsWith(href + '/')
               return (
                 <Link
@@ -61,6 +63,11 @@ export function Nav() {
                   )}
                 >
                   {label}
+                  {badge && (
+                    <span className="ml-1.5 rounded-full border border-line bg-surface-2 px-1.5 py-0.5 align-middle text-[0.625rem] font-medium uppercase leading-none tracking-wide text-muted">
+                      {badge}
+                    </span>
+                  )}
                 </Link>
               )
             })}
@@ -68,11 +75,11 @@ export function Nav() {
 
           {/* Right side */}
           <div className="flex items-center gap-2">
-            <ThemeToggle className="hidden md:flex" />
+            <ThemeToggle className="hidden lg:flex" />
             <Link
               href="/contact"
               className={cn(
-                'hidden md:inline-flex items-center h-9 px-4 rounded-control text-body font-medium',
+                'hidden lg:inline-flex items-center h-9 px-4 rounded-control text-body font-medium',
                 'border border-line text-text bg-transparent',
                 'hover:bg-surface transition-colors duration-[120ms] ease-[cubic-bezier(0.2,0,0,1)] no-underline'
               )}
@@ -81,7 +88,7 @@ export function Nav() {
             </Link>
             {/* Mobile menu toggle */}
             <button
-              className="md:hidden flex items-center justify-center w-11 h-11 rounded-control text-muted hover:text-text transition-colors"
+              className="lg:hidden flex items-center justify-center w-11 h-11 rounded-control text-muted hover:text-text transition-colors"
               onClick={() => setMobileOpen(true)}
               aria-label="Open navigation menu"
             >
