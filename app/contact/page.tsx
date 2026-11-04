@@ -20,15 +20,15 @@ export default function ContactPage() {
         id: 'email',
         label: 'Email',
         detail: profile.email,
-        note: 'Cocok untuk brief proyek yang detail',
+        note: 'Best for detailed project briefs',
         href: `mailto:${profile.email}`,
         external: false,
       },
       profile.links.whatsapp && {
         id: 'whatsapp',
         label: 'WhatsApp',
-        detail: 'Chat langsung',
-        note: 'Diskusi cepat',
+        detail: 'Direct chat',
+        note: 'Quick discussion',
         href: profile.links.whatsapp,
         external: true,
       },
@@ -36,7 +36,7 @@ export default function ContactPage() {
         id: 'linkedin',
         label: 'LinkedIn',
         detail: handle(profile.links.linkedin),
-        note: 'Koneksi profesional',
+        note: 'Professional network',
         href: profile.links.linkedin,
         external: true,
       },
@@ -44,7 +44,7 @@ export default function ContactPage() {
         id: 'github',
         label: 'GitHub',
         detail: handle(profile.links.github),
-        note: 'Kode dan repositori proyek',
+        note: 'Code and project repositories',
         href: profile.links.github,
         external: true,
       },
@@ -52,7 +52,7 @@ export default function ContactPage() {
         id: 'instagram',
         label: 'Instagram',
         detail: handle(profile.links.instagram),
-        note: 'Update dan aktivitas',
+        note: 'Updates and activities',
         href: profile.links.instagram,
         external: true,
       },
@@ -72,14 +72,14 @@ export default function ContactPage() {
         <p className="eyebrow mb-4">Let&apos;s work together</p>
         <h1 className="text-h1 mb-4">Get in touch</h1>
         <p className="text-body text-muted">
-          Terbuka untuk kolaborasi, proyek freelance, dan peran full-time. Punya brief yang jelas atau baru
-          sekadar ide, silakan hubungi lewat salah satu kanal berikut atau kirim pesan lewat form.
+          Open to collaboration, freelance projects, and full-time roles. Whether you have a clear brief or
+          just an idea, reach out through one of the channels below or send a message through the form.
         </p>
       </div>
 
       <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
         <div>
-          <h2 className="text-h3 mb-5">Hubungi saya</h2>
+          <h2 className="text-h3 mb-5">Contact me</h2>
           <ul className="flex flex-col gap-2.5">
             {channels.map((c) => (
               <li key={c.id}>
@@ -110,14 +110,14 @@ export default function ContactPage() {
         </div>
 
         <div>
-          <h2 className="text-h3 mb-2">Kirim pesan</h2>
+          <h2 className="text-h3 mb-2">Send a message</h2>
           <p className="mb-6 text-small text-muted">
-            Ceritakan proyek, ide, atau peluang kolaborasi yang ingin dibahas.
+            Tell me about your project, idea, or collaboration opportunity.
           </p>
           {profile.links.whatsapp ? (
             <ContactForm whatsappUrl={profile.links.whatsapp} />
           ) : (
-            <p className="text-body text-muted">Use one of the channels on the left to reach me.</p>
+            <p className="text-body text-muted">Use one of the listed channels to reach me.</p>
           )}
         </div>
       </div>
