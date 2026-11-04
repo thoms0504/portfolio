@@ -3,11 +3,12 @@ import { getProfile } from '@/lib/profile'
 import { getAllProjects } from '@/lib/projects'
 import { ExperienceTimeline, EducationTimeline } from '@/components/timeline/Timeline'
 import { SkillGroup } from '@/components/skills/SkillGroup'
+import { CertificationList } from '@/components/certifications/CertificationList'
 import { PrintButton } from '@/components/ui/PrintButton'
 
 export const metadata: Metadata = {
   title: 'Resume',
-  description: 'Resume of Thomson Sibuea: summary, experience, education, projects and skills.',
+  description: 'Resume of Thomson Sibuea: summary, experience, education, certifications, projects and skills.',
 }
 
 const strip = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
@@ -75,6 +76,16 @@ export default function ResumePage() {
             Education
           </h2>
           <EducationTimeline items={profile.education} />
+        </section>
+      )}
+
+      {/* Certifications */}
+      {profile.certifications && profile.certifications.length > 0 && (
+        <section aria-labelledby="res-cert-heading" className="mb-12 border-b border-line pb-12">
+          <h2 id="res-cert-heading" className="text-h2 mb-8">
+            Certifications
+          </h2>
+          <CertificationList items={profile.certifications} />
         </section>
       )}
 

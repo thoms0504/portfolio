@@ -45,7 +45,7 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
               className="text-xs text-faint"
               style={{ fontFamily: 'var(--font-geist-mono), monospace', color: 'var(--text-faint)' }}
             >
-              belum ada dokumentasi
+              no documentation yet
             </span>
           </div>
         )}
@@ -112,7 +112,7 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
         )}
 
         <span className="pcard-open">
-          Lihat detail <ArrowUpRight size={13} aria-hidden="true" />
+          View details <ArrowUpRight size={13} aria-hidden="true" />
         </span>
       </div>
 

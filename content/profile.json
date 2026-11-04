@@ -15,7 +15,7 @@
   "experience": [
     {
       "company": "Badan Pusat Statistik (BPS) Provinsi Lampung",
-      "role": "IT Specialist",
+      "role": "Junior Data Scientist",
       "type": "Full-time",
       "period": "Dec 2024 - Present",
       "location": "Lampung, Indonesia · On-site",
@@ -26,6 +26,20 @@
         "Perform statistical processing and dissemination through quality statistical products.",
         "Responsible for the correction and updating of the agency website.",
         "Conduct data processing related to surveys and censuses."
+      ]
+    },
+    {
+      "company": "Badan Pusat Statistik (BPS) Head Office",
+      "role": "Information Technology Specialist",
+      "type": "Internship",
+      "period": "Oct 2024 - Nov 2024",
+      "location": "Central Jakarta, Jakarta, Indonesia · On-site",
+      "description": "Completed an on-the-job training at BPS-Statistics Indonesia, contributing to the migration of 500+ GB of national census and survey data to a new server infrastructure.",
+      "highlights": [
+        "Participated in a data migration project from legacy servers to the latest server infrastructure at BPS-Statistics Indonesia (Head Office), covering more than 500 GB of data.",
+        "Migrated and verified data from the Agricultural Census (ST), Economic Census (SE), and other national surveys to ensure completeness and consistency after transfer.",
+        "Supported data integrity across nationwide datasets while adhering to government-grade data security standards.",
+        "Documented work progress and coordinated with the IT team and on-site supervisor."
       ]
     },
     {
@@ -104,7 +118,72 @@
       "description": "First-year student. GPA 3.58."
     }
   ],
-  "certifications": [],
+  "certifications": [
+    {
+      "name": "Data Scientist Associate",
+      "issuer": "DataCamp",
+      "issued": "Nov 2026",
+      "expires": "Nov 2028",
+      "credentialId": "DSA0014893703222"
+    },
+    {
+      "name": "Claude Academy: AI Fluency: Framework and foundations",
+      "issuer": "Anthropic",
+      "issued": "Nov 2026",
+      "credentialId": "ca278b7beafc4a362ecb72e8919c8d51"
+    },
+    {
+      "name": "Claude Academy: AI Fluency for builders",
+      "issuer": "Anthropic",
+      "issued": "Nov 2026",
+      "credentialId": "dea14c102ad679adc408af599f58c6b2"
+    },
+    {
+      "name": "Data Analysis With Python",
+      "issuer": "freeCodeCamp",
+      "issued": "Jul 2024",
+      "credentialId": "fcc22e91a5e-1535-4738-a9a5-d6287db0aea5-dawp"
+    },
+    {
+      "name": "Intro to Machine Learning",
+      "issuer": "Kaggle",
+      "issued": "Apr 2023"
+    },
+    {
+      "name": "Intro to Deep Learning",
+      "issuer": "Kaggle",
+      "issued": "Jun 2024"
+    },
+    {
+      "name": "Data Visualization",
+      "issuer": "Kaggle",
+      "issued": "Mar 2023"
+    },
+    {
+      "name": "Computer Vision",
+      "issuer": "Kaggle",
+      "issued": "Jun 2024"
+    },
+    {
+      "name": "Kursus HTML dan CSS",
+      "issuer": "Progate",
+      "issued": "Jul 2021"
+    },
+    {
+      "name": "Belajar Dasar Visualisasi Data",
+      "issuer": "Dicoding Indonesia",
+      "issued": "Jul 2021",
+      "expires": "Jul 2024",
+      "credentialId": "JMZV29J63ZN9"
+    },
+    {
+      "name": "Memulai Pemrograman dengan Python",
+      "issuer": "Dicoding Indonesia",
+      "issued": "Aug 2021",
+      "expires": "Aug 2024",
+      "credentialId": "MRZMKLVLRPYQ"
+    }
+  ],
   "skills": {
     "languages": ["Python", "JavaScript", "TypeScript", "R", "PHP", "SQL", "HTML", "CSS"],
     "frameworks": [

@@ -14,12 +14,12 @@ interface ProjectModalProps {
   onClose: () => void
 }
 
-type Tab = 'deskripsi' | 'dokumentasi'
+type Tab = 'description' | 'documentation'
 
 const mono = { fontFamily: 'var(--font-geist-mono), ui-monospace, monospace' } as const
 
 export function ProjectModal({ project, onClose }: ProjectModalProps) {
-  const [tab, setTab] = useState<Tab>('deskripsi')
+  const [tab, setTab] = useState<Tab>('description')
   const [viewer, setViewer] = useState<number | null>(null)
   const [mounted, setMounted] = useState(false)
   const dialogRef = useRef<HTMLDivElement>(null)
@@ -128,7 +128,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   className="btn btn-primary btn-sm"
                 >
                   <TechLogo name="GitHub" size={15} mode="on-brand" />
-                  Lihat di GitHub
+                  View on GitHub
                   <ExternalLink size={13} aria-hidden="true" />
                 </a>
               )}
@@ -160,23 +160,23 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         <div className="modal-tabs" role="tablist" aria-label="Project sections">
           <button
             role="tab"
-            id="tab-deskripsi"
-            aria-selected={tab === 'deskripsi'}
-            aria-controls="panel-deskripsi"
+            id="tab-description"
+            aria-selected={tab === 'description'}
+            aria-controls="panel-description"
             className="modal-tab"
-            onClick={() => setTab('deskripsi')}
+            onClick={() => setTab('description')}
           >
-            Deskripsi
+            Description
           </button>
           <button
             role="tab"
-            id="tab-dokumentasi"
-            aria-selected={tab === 'dokumentasi'}
-            aria-controls="panel-dokumentasi"
+            id="tab-documentation"
+            aria-selected={tab === 'documentation'}
+            aria-controls="panel-documentation"
             className="modal-tab"
-            onClick={() => setTab('dokumentasi')}
+            onClick={() => setTab('documentation')}
           >
-            Dokumentasi
+            Documentation
             {docCount > 0 && (
               <span className="ml-2 rounded-full bg-surface-2 px-1.5 py-0.5 text-xs text-muted" style={mono}>
                 {docCount}
@@ -187,11 +187,11 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
         {/* Panels */}
         <div className="modal-body">
-          {tab === 'deskripsi' && (
+          {tab === 'description' && (
             <div
-              id="panel-deskripsi"
+              id="panel-description"
               role="tabpanel"
-              aria-labelledby="tab-deskripsi"
+              aria-labelledby="tab-description"
               className="grid gap-8 p-6 md:grid-cols-[1.15fr_1fr]"
             >
               <div className="space-y-4">
@@ -212,7 +212,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 ) : (
                   <div className="callout">
                     <FileText size={18} className="mt-0.5 flex-shrink-0 text-accent" aria-hidden="true" />
-                    <p className="text-small text-muted">Belum ada deskripsi untuk proyek ini.</p>
+                    <p className="text-small text-muted">No description available for this project yet.</p>
                   </div>
                 )}
               </div>
@@ -235,26 +235,26 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-small text-muted">Belum ada data tech stack.</p>
+                  <p className="text-small text-muted">No tech stack data yet.</p>
                 )}
               </div>
             </div>
           )}
 
-          {tab === 'dokumentasi' && (
+          {tab === 'documentation' && (
             <div
-              id="panel-dokumentasi"
+              id="panel-documentation"
               role="tabpanel"
-              aria-labelledby="tab-dokumentasi"
+              aria-labelledby="tab-documentation"
               className="p-6"
             >
               {docCount === 0 ? (
                 <div className="callout">
                   <ImageIcon size={18} className="mt-0.5 flex-shrink-0 text-accent" aria-hidden="true" />
                   <div>
-                    <p className="text-small font-medium text-text">Belum ada dokumentasi</p>
+                    <p className="text-small font-medium text-text">No documentation yet</p>
                     <p className="mt-1 text-small text-muted">
-                      Screenshot atau video demo untuk proyek ini belum tersedia.
+                      Screenshots or demo videos for this project are not available yet.
                     </p>
                   </div>
                 </div>
@@ -278,7 +278,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                               aria-label={`${project.title} demo video`}
                             >
                               <source src={src} type="video/mp4" />
-                              Browser Anda tidak mendukung pemutar video.
+                              Your browser does not support the video player.
                             </video>
                           </div>
                         ))}
@@ -296,7 +296,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                             type="button"
                             className="doc-thumb"
                             onClick={() => setViewer(i)}
-                            aria-label={`Perbesar screenshot ${i + 1} dari ${project.images.length}`}
+                            aria-label={`Enlarge screenshot ${i + 1} of ${project.images.length}`}
                           >
                             <Image
                               src={src}
@@ -323,7 +323,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             style={{ background: 'color-mix(in srgb, #000 92%, transparent)', animation: 'fade 160ms ease both' }}
             role="dialog"
             aria-modal="true"
-            aria-label={`Screenshot ${viewer + 1} dari ${project.images.length}`}
+            aria-label={`Screenshot ${viewer + 1} of ${project.images.length}`}
             onMouseDown={(e) => {
               if (e.target === e.currentTarget) setViewer(null)
             }}
@@ -342,7 +342,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             <button
               type="button"
               onClick={() => setViewer(null)}
-              aria-label="Tutup gambar"
+              aria-label="Close image"
               className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
             >
               <X size={18} aria-hidden="true" />
@@ -353,7 +353,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <button
                   type="button"
                   onClick={() => setViewer((viewer - 1 + project.images.length) % project.images.length)}
-                  aria-label="Gambar sebelumnya"
+                  aria-label="Previous image"
                   className="absolute left-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
                 >
                   <ChevronLeft size={20} aria-hidden="true" />
@@ -361,7 +361,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <button
                   type="button"
                   onClick={() => setViewer((viewer + 1) % project.images.length)}
-                  aria-label="Gambar berikutnya"
+                  aria-label="Next image"
                   className="absolute right-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
                 >
                   <ChevronRight size={20} aria-hidden="true" />

@@ -49,7 +49,13 @@ export interface Education {
 export interface Certification {
   name: string
   issuer: string
-  year: number
+  /** Issue date, e.g. "Jul 2024". */
+  issued: string
+  /** Expiry date, e.g. "Jul 2027". Omit when the credential does not expire. */
+  expires?: string
+  credentialId?: string
+  /** Link to verify the credential. */
+  credentialUrl?: string
 }
 
 export interface Profile {

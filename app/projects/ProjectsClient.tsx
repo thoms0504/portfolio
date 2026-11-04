@@ -59,7 +59,7 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
           />
           <input
             type="search"
-            placeholder="Cari judul atau teknologi..."
+            placeholder="Search by title or technology..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="h-10 w-full rounded-lg border border-line-strong bg-surface pl-9 pr-3 text-small text-text placeholder:text-muted transition-colors focus-visible:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
@@ -78,7 +78,7 @@ export function ProjectsClient({ projects }: ProjectsClientProps) {
       </p>
 
       {filtered.length === 0 ? (
-        <p className="py-12 text-body text-muted">Tidak ada proyek yang cocok. Coba filter lain.</p>
+        <p className="py-12 text-body text-muted">No matching projects. Try a different filter.</p>
       ) : (
         <ProjectGrid projects={filtered} />
       )}

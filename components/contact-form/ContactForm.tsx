@@ -34,9 +34,9 @@ function validate(data: FormState): FormErrors {
 
 /** The text that is pre-filled in the WhatsApp chat. */
 function buildWhatsAppText(data: FormState): string {
-  const lines = [`Halo Thomson, saya ${data.name.trim()}.`, '', data.message.trim()]
+  const lines = [`Hello Thomson, I am ${data.name.trim()}.`, '', data.message.trim()]
   if (data.email.trim()) lines.push('', `Email: ${data.email.trim()}`)
-  lines.push('', '(Dikirim dari portfolio)')
+  lines.push('', '(Sent from portfolio)')
   return lines.join('\n')
 }
 
