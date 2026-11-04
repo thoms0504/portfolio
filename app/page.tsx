@@ -52,7 +52,7 @@ export default function Home() {
     profile.links.whatsapp && {
       id: 'whatsapp' as const,
       label: 'WhatsApp',
-      detail: 'Chat langsung',
+      detail: 'Direct chat',
       href: profile.links.whatsapp,
     },
     profile.links.linkedin && {
@@ -96,7 +96,7 @@ export default function Home() {
                 Selected work
               </h2>
               <p className="mt-2 max-w-xl text-body text-muted">
-                Klik kartu untuk melihat deskripsi, tech stack, dan dokumentasi tanpa meninggalkan halaman.
+                Click a card to see the description, tech stack, and documentation without leaving the page.
               </p>
             </div>
             <Link href="/projects" className="btn btn-secondary btn-sm">
@@ -122,7 +122,7 @@ export default function Home() {
               Technologies I work with
             </h2>
             <p className="mt-2 max-w-xl text-body text-muted">
-              Bahasa, framework UI, backend, database, dan tools. Angka di tiap tile menunjukkan berapa proyek yang memakainya.
+              Languages, UI frameworks, backend, databases, and tools. The number on each tile shows how many projects use it.
             </p>
           </div>
           <div className="reveal">
@@ -173,8 +173,8 @@ export default function Home() {
                 Have a project in mind?
               </h2>
               <p className="mb-8 max-w-xl text-body text-muted">
-                Terbuka untuk kolaborasi, proyek freelance, dan peran full-time. Kirim pesan lewat email atau
-                salah satu kanal di samping.
+                Open to collaboration, freelance projects, and full-time roles. Send a message by email or
+                through one of the channels alongside.
               </p>
               <div className="flex flex-wrap gap-3">
                 <a href={`mailto:${profile.email}`} className="btn btn-primary">
