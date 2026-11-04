@@ -3,11 +3,10 @@ import Image from 'next/image'
 import { getProfile } from '@/lib/profile'
 import { ExperienceTimeline, EducationTimeline } from '@/components/timeline/Timeline'
 import { SkillGroup } from '@/components/skills/SkillGroup'
-import { CertificationList } from '@/components/certifications/CertificationList'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'Background, experience, education, certifications, and skills of Thomson Sibuea, software engineer.',
+  description: 'Background, experience, education, and skills of Thomson Sibuea, software engineer.',
 }
 
 export default function AboutPage() {
@@ -70,16 +69,6 @@ export default function AboutPage() {
               Education
             </h2>
             <EducationTimeline items={profile.education} />
-          </section>
-        )}
-
-        {/* Certifications */}
-        {profile.certifications && profile.certifications.length > 0 && (
-          <section aria-labelledby="cert-heading" className="py-12 border-b border-line">
-            <h2 id="cert-heading" className="text-h2 mb-8">
-              Certifications
-            </h2>
-            <CertificationList items={profile.certifications} />
           </section>
         )}
 
