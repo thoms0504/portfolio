@@ -18,7 +18,7 @@
       "role": "Junior Data Scientist",
       "type": "Full-time",
       "period": "Dec 2024 - Present",
-      "location": "Lampung, Indonesia · On-site",
+      "location": "Lampung, Indonesia Â· On-site",
       "description": "Building web applications for BPS Lampung and applying remote sensing, machine learning, deep learning and GeoAI to official statistics. Work includes survey monitoring (SIMONA), the TALITA statistics service portal, the WAWAI employee profile platform, queue and guest-book systems, and RAG-based assistants.",
       "highlights": [
         "Create and monitor 5-6 statistical contents such as infographics every month.",
@@ -33,7 +33,7 @@
       "role": "Information Technology Specialist",
       "type": "Internship",
       "period": "Oct 2024 - Nov 2024",
-      "location": "Central Jakarta, Jakarta, Indonesia · On-site",
+      "location": "Central Jakarta, Jakarta, Indonesia Â· On-site",
       "description": "Completed an on-the-job training at BPS-Statistics Indonesia, contributing to the migration of 500+ GB of national census and survey data to a new server infrastructure.",
       "highlights": [
         "Participated in a data migration project from legacy servers to the latest server infrastructure at BPS-Statistics Indonesia (Head Office), covering more than 500 GB of data.",
@@ -47,7 +47,7 @@
       "role": "Data Analyst",
       "type": "Contract",
       "period": "Mar 2024 - Dec 2024",
-      "location": "Jakarta, Indonesia · Remote",
+      "location": "Jakarta, Indonesia Â· Remote",
       "description": "",
       "highlights": [
         "With a partner, found and processed data on the development of exports and imports in Indonesia for 50+ types of Harmonized System (HS) Code, and identified potential industries for Indonesia in the next few years.",
@@ -60,7 +60,7 @@
       "role": "IT Technician",
       "type": "Internship",
       "period": "Aug 2023 - Oct 2023",
-      "location": "Cilegon, Banten, Indonesia · On-site",
+      "location": "Cilegon, Banten, Indonesia Â· On-site",
       "description": "",
       "highlights": [
         "Inputted and confirmed survey data from 50+ accommodation companies from paper forms into the website.",
@@ -74,7 +74,7 @@
       "role": "Web Developer",
       "type": "Full-time",
       "period": "Dec 2022 - Aug 2023",
-      "location": "Jakarta, Indonesia · Hybrid",
+      "location": "Jakarta, Indonesia Â· Hybrid",
       "description": "",
       "highlights": [
         "With my team, built a dashboard website for the results of field work practices (Praktik Kerja Lapangan) using CodeIgniter 4 as the framework. The dashboard presents research conducted in the field work practice, divided into 4 studies."
@@ -95,7 +95,7 @@
       "role": "Field Data Verifier",
       "type": "Contract",
       "period": "Feb 2023",
-      "location": "Jakarta, Indonesia · On-site",
+      "location": "Jakarta, Indonesia Â· On-site",
       "description": "Cross-verified and validated data from the Socio-Economic Registration (REGSOSEK) survey so that it stayed correct and consistent with real conditions. The role required face-to-face interaction with respondents, including in-depth interviews to validate the correctness of their answers, with accuracy, good communication skills and a steadfast commitment to data standards."
     }
   ],
@@ -119,6 +119,13 @@
     }
   ],
   "certifications": [
+    {
+      "name": "AI Engineer for Data Scientists Associate",
+      "issuer": "DataCamp",
+      "issued": "Nov 2026",
+      "expires": "Nov 2028",
+      "credentialId": "AEDS0019794013938"
+    },
     {
       "name": "Data Scientist Associate",
       "issuer": "DataCamp",
@@ -211,3 +218,4 @@
     "tools": ["Docker", "Git", "GitHub", "VS Code", "Google Cloud", "Google Apps Script", "Postman", "Vercel"]
   }
 }
+
