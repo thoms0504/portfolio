@@ -120,6 +120,13 @@
   ],
   "certifications": [
     {
+      "name": "Data Analyst Associate",
+      "issuer": "DataCamp",
+      "issued": "Nov 2026",
+      "expires": "Nov 2028",
+      "credentialId": "DAA0017210203808"
+    },
+    {
       "name": "AI Engineer for Data Scientists Associate",
       "issuer": "DataCamp",
       "issued": "Nov 2026",
