@@ -1,0 +1,19 @@
+---
+title: "TALITA-NG Mobile"
+slug: "talita-mobile"
+summary: "Android and iOS app for the public users of TALITA-NG at BPS Provinsi Lampung: AI chatbot, Q&A forum, Zoom consultation booking and live admin chat."
+category: "Web"
+featured: true
+order: 1.5
+period:
+  start: "2026-11"
+  end: ""
+stack: ["React Native", "Expo", "TypeScript", "Zustand", "FastAPI", "Socket.IO"]
+repoUrl: "https://github.com/thoms0504/talita-mobile"
+---
+
+TALITA-NG Mobile is the native companion of the TALITA statistics service portal. Public users get the same services on their phone, while admins keep using the web app. Both talk to the same FastAPI backend (REST endpoints plus Socket.IO), so no data is duplicated.
+
+Main features: onboarding and sign-in with username and password or Google, a home screen with live statistics and office information, an AI chatbot with streamed answers, session history, Markdown rendering and voice input, a Q&A forum with search, tag filters, voting and reporting, Zoom consultation booking with a request history, real-time chat with an admin including image and PDF attachments, push notifications with validated deep links, dark mode and offline caching. Tokens are stored in SecureStore with automatic refresh, and the visual identity follows the TALITA-NG web app.
+
+The app is built with Expo (SDK 54) and Expo Router in TypeScript, with Zustand for state.
