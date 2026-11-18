@@ -5,7 +5,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ArrowUpRight, RotateCcw, Send, X } from 'lucide-react'
 import { createEngine, type Engine } from '@/lib/chatbot/engine'
-import type { ChatContext, ChatLink, ChatReply, Kb } from '@/lib/chatbot/types'
+import type { ChatContext, ChatLink, ChatReply, Kb, Lang } from '@/lib/chatbot/types'
+import { useLang } from '@/components/i18n/LanguageProvider'
 import { cn } from '@/lib/cn'
 
 interface Message {
@@ -25,8 +26,10 @@ interface Saved {
 const STORAGE_KEY = 'portfolio-chat-v1'
 const MAX_INPUT = 300
 
-const WELCOME =
-  "Hi! I'm the portfolio assistant. Ask me about Thomson's projects, experience, education, certifications, skills or how to contact him."
+const welcomeText = (lang: Lang) =>
+  lang === 'id'
+    ? "Hai! Saya asisten portofolio. Tanyakan proyek, pengalaman, pendidikan, sertifikasi, keahlian Thomson, atau cara menghubunginya."
+    : "Hi! I'm the portfolio assistant. Ask me about Thomson's projects, experience, education, certifications, skills or how to contact him."
 
 interface ChatPanelProps {
   open: boolean
@@ -92,6 +95,7 @@ function RichText({ text }: { text: string }) {
 
 export default function ChatPanel({ open, onClose }: ChatPanelProps) {
   const pathname = usePathname()
+  const { lang } = useLang()
   const [messages, setMessages] = useState<Message[]>([])
   const [suggestions, setSuggestions] = useState<string[]>([])
   const [input, setInput] = useState('')
@@ -101,16 +105,18 @@ export default function ChatPanel({ open, onClose }: ChatPanelProps) {
 
   const engineRef = useRef<Engine | null>(null)
   const ctxRef = useRef<ChatContext>({})
+  const langRef = useRef<Lang>(lang)
+  const messageCountRef = useRef(0)
   const idRef = useRef(0)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const logRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const welcome = useCallback((engine: Engine): Saved => {
+  const welcome = useCallback((engine: Engine, language: Lang): Saved => {
     return {
-      messages: [{ id: ++idRef.current, role: 'bot', text: WELCOME }],
-      suggestions: engine.starters('en'),
-      context: {},
+      messages: [{ id: ++idRef.current, role: 'bot', text: welcomeText(language) }],
+      suggestions: engine.starters(language),
+      context: { lang: language },
     }
   }, [])
 
@@ -130,7 +136,10 @@ export default function ChatPanel({ open, onClose }: ChatPanelProps) {
       } catch {
         saved = null
       }
-      const state = saved && Array.isArray(saved.messages) && saved.messages.length ? saved : welcome(engine)
+      const state =
+        saved && Array.isArray(saved.messages) && saved.messages.length
+          ? saved
+          : welcome(engine, langRef.current)
       idRef.current = state.messages.reduce((m, x) => Math.max(m, x.id), 0)
       ctxRef.current = state.context ?? {}
       setMessages(state.messages)
@@ -147,6 +156,22 @@ export default function ChatPanel({ open, onClose }: ChatPanelProps) {
       if (timerRef.current) clearTimeout(timerRef.current)
     }
   }, [loadKb])
+
+  useEffect(() => {
+    messageCountRef.current = messages.length
+  }, [messages])
+
+  // Keep the assistant in step with the site-wide language choice.
+  useEffect(() => {
+    langRef.current = lang
+    ctxRef.current = { ...ctxRef.current, lang }
+    const engine = engineRef.current
+    if (!engine || !ready || messageCountRef.current !== 1) return
+    setMessages((prev) =>
+      prev.map((m) => (m.role === 'bot' ? { ...m, text: welcomeText(lang) } : m))
+    )
+    setSuggestions(engine.starters(lang))
+  }, [lang, ready])
 
   // Persist the conversation for the tab session.
   useEffect(() => {
@@ -206,7 +231,7 @@ export default function ChatPanel({ open, onClose }: ChatPanelProps) {
     if (!engine) return
     if (timerRef.current) clearTimeout(timerRef.current)
     setBusy(false)
-    const fresh = welcome(engine)
+    const fresh = welcome(engine, lang)
     ctxRef.current = fresh.context
     setMessages(fresh.messages)
     setSuggestions(fresh.suggestions)
@@ -228,13 +253,44 @@ export default function ChatPanel({ open, onClose }: ChatPanelProps) {
     if (window.innerWidth < 640) onClose()
   }
 
+  const ui =
+    lang === 'id'
+      ? {
+          dialog: 'Asisten portofolio',
+          subtitle: 'Jawaban hanya dari portofolio ini. Tanpa AI eksternal.',
+          newConversation: 'Mulai percakapan baru',
+          newConversationTitle: 'Percakapan baru',
+          close: 'Tutup asisten',
+          loading: 'Memuat...',
+          loadError: 'Gagal memuat data portofolio.',
+          retry: 'Coba lagi',
+          typing: 'Asisten sedang mengetik',
+          inputLabel: 'Ajukan pertanyaan tentang portofolio',
+          placeholder: 'Tanya tentang proyek, keahlian, kontak...',
+          send: 'Kirim pesan',
+        }
+      : {
+          dialog: 'Portfolio assistant',
+          subtitle: 'Answers from this portfolio only. No external AI.',
+          newConversation: 'Start a new conversation',
+          newConversationTitle: 'New conversation',
+          close: 'Close assistant',
+          loading: 'Loading...',
+          loadError: "I couldn't load the portfolio data.",
+          retry: 'Try again',
+          typing: 'Assistant is typing',
+          inputLabel: 'Ask a question about the portfolio',
+          placeholder: 'Ask about projects, skills, contact...',
+          send: 'Send message',
+        }
+
   const chip =
     'rounded-full border border-line-strong bg-surface px-3 py-1.5 text-left text-xs text-text transition-colors hover:border-accent hover:text-accent disabled:opacity-50'
 
   return (
     <div
       role="dialog"
-      aria-label="Portfolio assistant"
+      aria-label={ui.dialog}
       aria-modal="false"
       hidden={!open}
       className={cn(
@@ -248,16 +304,16 @@ export default function ChatPanel({ open, onClose }: ChatPanelProps) {
       {/* Header */}
       <div className="flex items-start justify-between gap-3 border-b border-line bg-surface px-4 py-3">
         <div className="min-w-0">
-          <p className="text-body font-semibold leading-tight text-text">Portfolio assistant</p>
-          <p className="mt-0.5 text-xs text-muted">Answers from this portfolio only. No external AI.</p>
+          <p className="text-body font-semibold leading-tight text-text">{ui.dialog}</p>
+          <p className="mt-0.5 text-xs text-muted">{ui.subtitle}</p>
         </div>
         <div className="flex flex-shrink-0 items-center gap-1">
           <button
             type="button"
             onClick={reset}
             disabled={!ready}
-            aria-label="Start a new conversation"
-            title="New conversation"
+            aria-label={ui.newConversation}
+            title={ui.newConversationTitle}
             className="grid h-8 w-8 place-items-center rounded-lg text-muted transition-colors hover:bg-surface-2 hover:text-text disabled:opacity-40"
           >
             <RotateCcw size={15} aria-hidden="true" />
@@ -265,7 +321,7 @@ export default function ChatPanel({ open, onClose }: ChatPanelProps) {
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close assistant"
+            aria-label={ui.close}
             className="grid h-8 w-8 place-items-center rounded-lg text-muted transition-colors hover:bg-surface-2 hover:text-text"
           >
             <X size={17} aria-hidden="true" />
@@ -275,12 +331,12 @@ export default function ChatPanel({ open, onClose }: ChatPanelProps) {
 
       {/* Messages */}
       <div ref={logRef} className="flex-1 space-y-4 overflow-y-auto px-4 py-4" role="log" aria-live="polite" aria-relevant="additions">
-        {!ready && !loadError && <p className="text-small text-muted">Loading...</p>}
+        {!ready && !loadError && <p className="text-small text-muted">{ui.loading}</p>}
         {loadError && (
           <div className="space-y-2">
-            <p className="text-small text-muted">I couldn&apos;t load the portfolio data.</p>
+            <p className="text-small text-muted">{ui.loadError}</p>
             <button type="button" className={chip} onClick={loadKb}>
-              Try again
+              {ui.retry}
             </button>
           </div>
         )}
@@ -338,7 +394,7 @@ export default function ChatPanel({ open, onClose }: ChatPanelProps) {
         )}
 
         {busy && (
-          <div className="flex items-center gap-1 px-1" aria-label="Assistant is typing" role="status">
+          <div className="flex items-center gap-1 px-1" aria-label={ui.typing} role="status">
             <span className="chat-dot" />
             <span className="chat-dot" style={{ animationDelay: '120ms' }} />
             <span className="chat-dot" style={{ animationDelay: '240ms' }} />
@@ -365,7 +421,7 @@ export default function ChatPanel({ open, onClose }: ChatPanelProps) {
         }}
       >
         <label className="sr-only" htmlFor="chat-input">
-          Ask a question about the portfolio
+          {ui.inputLabel}
         </label>
         <input
           id="chat-input"
@@ -374,14 +430,14 @@ export default function ChatPanel({ open, onClose }: ChatPanelProps) {
           onChange={(e) => setInput(e.target.value)}
           maxLength={MAX_INPUT}
           autoComplete="off"
-          placeholder="Ask about projects, skills, contact..."
+          placeholder={ui.placeholder}
           disabled={!ready}
           className="h-10 min-w-0 flex-1 rounded-lg border border-line-strong bg-bg px-3 text-small text-text placeholder:text-muted focus-visible:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 disabled:opacity-60"
         />
         <button
           type="submit"
           disabled={!ready || busy || !input.trim()}
-          aria-label="Send message"
+          aria-label={ui.send}
           className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-lg transition-opacity disabled:opacity-40"
           style={{ background: 'var(--brand)', color: 'var(--brand-on)' }}
         >

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { MessageCircle, X } from 'lucide-react'
+import { useLang } from '@/components/i18n/LanguageProvider'
 
 // The panel (and the chatbot engine) is only downloaded the first time the button is clicked.
 const ChatPanel = dynamic(() => import('./ChatPanel'), { ssr: false })
@@ -11,6 +12,7 @@ const NUDGE_KEY = 'portfolio-chat-nudge'
 
 /** Floating chat button, fixed to the bottom-right corner on every page. */
 export function ChatWidget() {
+  const { lang } = useLang()
   const [open, setOpen] = useState(false)
   const [everOpened, setEverOpened] = useState(false)
   const [nudge, setNudge] = useState(false)
@@ -65,14 +67,22 @@ export function ChatWidget() {
             className="chat-pop hidden rounded-full border border-line-strong bg-surface px-3.5 py-2 text-small text-text sm:block"
             style={{ boxShadow: 'var(--shadow-lg)' }}
           >
-            Ask me about this portfolio
+            {lang === 'id' ? 'Tanya saya tentang portofolio ini' : 'Ask me about this portfolio'}
           </button>
         )}
         <button
           ref={buttonRef}
           type="button"
           onClick={toggle}
-          aria-label={open ? 'Close portfolio assistant' : 'Open portfolio assistant'}
+          aria-label={
+            lang === 'id'
+              ? open
+                ? 'Tutup asisten portofolio'
+                : 'Buka asisten portofolio'
+              : open
+                ? 'Close portfolio assistant'
+                : 'Open portfolio assistant'
+          }
           aria-expanded={open}
           className="chat-fab grid h-14 w-14 place-items-center rounded-full transition-transform duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
           style={{ background: 'var(--brand)', color: 'var(--brand-on)', boxShadow: '0 10px 30px var(--accent-glow), 0 2px 8px rgba(0,0,0,0.35)' }}

@@ -5,19 +5,23 @@ import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { Menu } from 'lucide-react'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
+import { LanguageToggle } from '@/components/i18n/LanguageToggle'
+import { useLang } from '@/components/i18n/LanguageProvider'
+import { Tx } from '@/components/i18n/Tx'
 import { MobileMenu, type NavLink } from './MobileMenu'
 import { cn } from '@/lib/cn'
 
 const navLinks: NavLink[] = [
-  { href: '/projects', label: 'Projects' },
-  { href: '/about', label: 'About' },
-  { href: '/certifications', label: 'Certifications' },
-  { href: '/articles', label: 'Articles', badge: 'Soon' },
-  { href: '/resume', label: 'Resume' },
+  { href: '/projects', label: 'Projects', labelId: 'Proyek' },
+  { href: '/about', label: 'About', labelId: 'Tentang' },
+  { href: '/certifications', label: 'Certifications', labelId: 'Sertifikasi' },
+  { href: '/articles', label: 'Articles', labelId: 'Artikel', badge: 'Soon', badgeId: 'Segera' },
+  { href: '/resume', label: 'Resume', labelId: 'CV' },
 ]
 
 export function Nav() {
   const pathname = usePathname()
+  const { lang } = useLang()
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -48,8 +52,11 @@ export function Nav() {
           </Link>
 
           {/* Desktop nav */}
-          <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-1">
-            {navLinks.map(({ href, label, badge }) => {
+          <nav
+            aria-label={lang === 'id' ? 'Navigasi utama' : 'Main navigation'}
+            className="hidden lg:flex items-center gap-1"
+          >
+            {navLinks.map(({ href, label, labelId, badge, badgeId }) => {
               const active = pathname === href || pathname.startsWith(href + '/')
               return (
                 <Link
@@ -62,10 +69,10 @@ export function Nav() {
                       : 'text-muted hover:text-text'
                   )}
                 >
-                  {label}
+                  <Tx en={label} id={labelId} />
                   {badge && (
                     <span className="ml-1.5 rounded-full border border-line bg-surface-2 px-1.5 py-0.5 align-middle text-[0.625rem] font-medium uppercase leading-none tracking-wide text-muted">
-                      {badge}
+                      <Tx en={badge} id={badgeId} />
                     </span>
                   )}
                 </Link>
@@ -75,6 +82,7 @@ export function Nav() {
 
           {/* Right side */}
           <div className="flex items-center gap-2">
+            <LanguageToggle className="hidden lg:inline-flex" />
             <ThemeToggle className="hidden lg:flex" />
             <Link
               href="/contact"
@@ -84,13 +92,13 @@ export function Nav() {
                 'hover:bg-surface transition-colors duration-[120ms] ease-[cubic-bezier(0.2,0,0,1)] no-underline'
               )}
             >
-              Contact
+              <Tx en="Contact" id="Kontak" />
             </Link>
             {/* Mobile menu toggle */}
             <button
               className="lg:hidden flex items-center justify-center w-11 h-11 rounded-control text-muted hover:text-text transition-colors"
               onClick={() => setMobileOpen(true)}
-              aria-label="Open navigation menu"
+              aria-label={lang === 'id' ? 'Buka menu navigasi' : 'Open navigation menu'}
             >
               <Menu size={20} strokeWidth={1.5} aria-hidden="true" />
             </button>

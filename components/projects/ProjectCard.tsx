@@ -3,6 +3,8 @@
 import Image from 'next/image'
 import { ArrowUpRight, ImageIcon, PlayCircle } from 'lucide-react'
 import { TechLogo } from '@/components/ui/TechLogo'
+import { Tx } from '@/components/i18n/Tx'
+import { useLang } from '@/components/i18n/LanguageProvider'
 import type { Project } from '@/types'
 
 interface ProjectCardProps {
@@ -13,6 +15,7 @@ interface ProjectCardProps {
 const MAX_LOGOS = 6
 
 export function ProjectCard({ project, onOpen }: ProjectCardProps) {
+  const { lang } = useLang()
   const year = project.period.start.slice(0, 4)
   const hasDocs = project.images.length > 0 || project.videos.length > 0
   const extra = project.stack.length - MAX_LOGOS
@@ -23,7 +26,9 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
       className="pcard"
       onClick={() => onOpen(project.slug)}
       aria-haspopup="dialog"
-      aria-label={`Open details for ${project.title}`}
+      aria-label={
+        lang === 'id' ? `Buka detail ${project.title}` : `Open details for ${project.title}`
+      }
     >
       <div className="pcard-media">
         {project.cover ? (
@@ -45,7 +50,7 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
               className="text-xs text-faint"
               style={{ fontFamily: 'var(--font-geist-mono), monospace', color: 'var(--text-faint)' }}
             >
-              no documentation yet
+              <Tx en="no documentation yet" id="belum ada dokumentasi" />
             </span>
           </div>
         )}
@@ -112,7 +117,7 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
         )}
 
         <span className="pcard-open">
-          View details <ArrowUpRight size={13} aria-hidden="true" />
+          <Tx en="View details" id="Lihat detail" /> <ArrowUpRight size={13} aria-hidden="true" />
         </span>
       </div>
 
@@ -129,7 +134,9 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
           )}
         </div>
 
-        <p className="text-small text-muted line-clamp-3">{project.summary}</p>
+        <p className="text-small text-muted line-clamp-3">
+          <Tx en={project.summary} id={project.summaryId} />
+        </p>
 
         <div className="mt-auto flex flex-wrap items-center gap-1.5 pt-2">
           {project.stack.slice(0, MAX_LOGOS).map((t) => (

@@ -1,7 +1,11 @@
+'use client'
+
 import Image from 'next/image'
 import { ArrowUpRight, CalendarDays } from 'lucide-react'
 import type { Certification } from '@/types'
 import { ISSUER_LOGOS, getCredentialUrl } from '@/lib/issuers'
+import { Tx } from '@/components/i18n/Tx'
+import { useLang } from '@/components/i18n/LanguageProvider'
 
 interface CertificationListProps {
   items: Certification[]
@@ -69,12 +73,13 @@ function StatusChip({ expires }: { expires?: string }) {
         style={{ background: expired ? 'var(--text-faint)' : 'var(--accent)' }}
         aria-hidden="true"
       />
-      {expired ? 'Expired' : 'Active'}
+      <Tx en={expired ? 'Expired' : 'Active'} id={expired ? 'Kedaluwarsa' : 'Aktif'} />
     </span>
   )
 }
 
 export function CertificationList({ items }: CertificationListProps) {
+  const { lang } = useLang()
   return (
     <ul className="grid gap-4 sm:grid-cols-2">
       {items.map((cert) => {
@@ -96,15 +101,24 @@ export function CertificationList({ items }: CertificationListProps) {
             <dl className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted" style={mono}>
               <div className="flex items-center gap-1.5">
                 <CalendarDays size={13} aria-hidden="true" />
-                <dt className="sr-only">Issued</dt>
-                <dd>Issued {cert.issued}</dd>
+                <dt className="sr-only">
+                  <Tx en="Issued" id="Diterbitkan" />
+                </dt>
+                <dd>
+                  <Tx en={`Issued ${cert.issued}`} id={`Diterbitkan ${cert.issued}`} />
+                </dd>
               </div>
               {cert.expires && (
                 <div className="flex items-center gap-1.5">
                   <CalendarDays size={13} aria-hidden="true" />
-                  <dt className="sr-only">Expiry</dt>
+                  <dt className="sr-only">
+                    <Tx en="Expiry" id="Berlaku sampai" />
+                  </dt>
                   <dd>
-                    {hasExpired(cert.expires) ? 'Expired' : 'Expires'} {cert.expires}
+                    <Tx
+                      en={`${hasExpired(cert.expires) ? 'Expired' : 'Expires'} ${cert.expires}`}
+                      id={`${hasExpired(cert.expires) ? 'Kedaluwarsa' : 'Berlaku sampai'} ${cert.expires}`}
+                    />
                   </dd>
                 </div>
               )}
@@ -124,10 +138,14 @@ export function CertificationList({ items }: CertificationListProps) {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`Show credential: ${cert.name} (opens in a new tab)`}
+                    aria-label={
+                      lang === 'id'
+                        ? `Tampilkan kredensial: ${cert.name} (terbuka di tab baru)`
+                        : `Show credential: ${cert.name} (opens in a new tab)`
+                    }
                     className="no-print btn btn-secondary btn-sm flex-shrink-0"
                   >
-                    Show credential
+                    <Tx en="Show credential" id="Lihat kredensial" />
                     <ArrowUpRight size={14} aria-hidden="true" />
                   </a>
                 )}

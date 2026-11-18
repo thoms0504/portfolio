@@ -7,6 +7,8 @@ import { ChevronLeft, ChevronRight, ExternalLink, FileText, ImageIcon, X } from 
 import { TechBadge } from '@/components/ui/TechBadge'
 import { TechLogo } from '@/components/ui/TechLogo'
 import { TECH_CATEGORIES, getTech } from '@/lib/tech'
+import { Tx } from '@/components/i18n/Tx'
+import { useLang } from '@/components/i18n/LanguageProvider'
 import type { Project } from '@/types'
 
 interface ProjectModalProps {
@@ -18,7 +20,11 @@ type Tab = 'description' | 'documentation'
 
 const mono = { fontFamily: 'var(--font-geist-mono), ui-monospace, monospace' } as const
 
+const toParagraphs = (value?: string) =>
+  (value ?? '').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean)
+
 export function ProjectModal({ project, onClose }: ProjectModalProps) {
+  const { lang } = useLang()
   const [tab, setTab] = useState<Tab>('description')
   const [viewer, setViewer] = useState<number | null>(null)
   const [mounted, setMounted] = useState(false)
@@ -28,10 +34,8 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
   const docCount = project.images.length + project.videos.length
   const year = project.period.start.slice(0, 4)
 
-  const paragraphs = useMemo(
-    () => project.content.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean),
-    [project.content]
-  )
+  const paragraphs = useMemo(() => toParagraphs(project.content), [project.content])
+  const paragraphsId = useMemo(() => toParagraphs(project.contentId), [project.contentId])
 
   // Stack grouped by category, in a stable category order.
   const stackGroups = useMemo(() => {
@@ -128,7 +132,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   className="btn btn-primary btn-sm"
                 >
                   <TechLogo name="GitHub" size={15} mode="on-brand" />
-                  View on GitHub
+                  <Tx en="View on GitHub" id="Lihat di GitHub" />
                   <ExternalLink size={13} aria-hidden="true" />
                 </a>
               )}
@@ -139,7 +143,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   rel="noopener noreferrer"
                   className="btn btn-secondary btn-sm"
                 >
-                  Live demo
+                  <Tx en="Live demo" id="Demo langsung" />
                   <ExternalLink size={13} aria-hidden="true" />
                 </a>
               )}
@@ -149,7 +153,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             ref={closeRef}
             type="button"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={lang === 'id' ? 'Tutup' : 'Close'}
             className="grid h-9 w-9 flex-shrink-0 place-items-center rounded-lg border border-line text-muted transition-colors hover:bg-surface-2 hover:text-text"
           >
             <X size={18} aria-hidden="true" />
@@ -157,7 +161,11 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         </div>
 
         {/* Tabs */}
-        <div className="modal-tabs" role="tablist" aria-label="Project sections">
+        <div
+          className="modal-tabs"
+          role="tablist"
+          aria-label={lang === 'id' ? 'Bagian proyek' : 'Project sections'}
+        >
           <button
             role="tab"
             id="tab-description"
@@ -166,7 +174,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             className="modal-tab"
             onClick={() => setTab('description')}
           >
-            Description
+            <Tx en="Description" id="Deskripsi" />
           </button>
           <button
             role="tab"
@@ -176,7 +184,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             className="modal-tab"
             onClick={() => setTab('documentation')}
           >
-            Documentation
+            <Tx en="Documentation" id="Dokumentasi" />
             {docCount > 0 && (
               <span className="ml-2 rounded-full bg-surface-2 px-1.5 py-0.5 text-xs text-muted" style={mono}>
                 {docCount}
@@ -195,24 +203,29 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               className="grid gap-8 p-6 md:grid-cols-[1.15fr_1fr]"
             >
               <div className="space-y-4">
-                {paragraphs.length > 0 ? (
-                  paragraphs.map((p, i) => (
-                    <p
-                      key={i}
-                      className={i === 0 ? 'text-body text-text' : 'text-body text-muted'}
-                      style={{ lineHeight: 1.7 }}
-                    >
-                      {p}
+                  {paragraphs.length > 0 ? (
+                    paragraphs.map((p, i) => (
+                      <p
+                        key={i}
+                        className={i === 0 ? 'text-body text-text' : 'text-body text-muted'}
+                        style={{ lineHeight: 1.7 }}
+                      >
+                        <Tx en={p} id={paragraphsId[i]} />
+                      </p>
+                    ))
+                  ) : project.summary ? (
+                    <p className="text-body text-text" style={{ lineHeight: 1.7 }}>
+                      <Tx en={project.summary} id={project.summaryId} />
                     </p>
-                  ))
-                ) : project.summary ? (
-                  <p className="text-body text-text" style={{ lineHeight: 1.7 }}>
-                    {project.summary}
-                  </p>
-                ) : (
+                  ) : (
                   <div className="callout">
                     <FileText size={18} className="mt-0.5 flex-shrink-0 text-accent" aria-hidden="true" />
-                    <p className="text-small text-muted">No description available for this project yet.</p>
+                    <p className="text-small text-muted">
+                      <Tx
+                        en="No description available for this project yet."
+                        id="Belum ada deskripsi untuk proyek ini."
+                      />
+                    </p>
                   </div>
                 )}
               </div>
@@ -224,7 +237,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     {stackGroups.map((g) => (
                       <div key={g.key}>
                         <p className="mb-2 text-xs text-muted" style={mono}>
-                          {g.label}
+                          <Tx en={g.label} id={g.labelId} />
                         </p>
                         <div className="flex flex-wrap gap-2">
                           {g.items.map((t) => (
@@ -235,7 +248,9 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-small text-muted">No tech stack data yet.</p>
+                  <p className="text-small text-muted">
+                    <Tx en="No tech stack data yet." id="Belum ada data tech stack." />
+                  </p>
                 )}
               </div>
             </div>
@@ -252,17 +267,24 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <div className="callout">
                   <ImageIcon size={18} className="mt-0.5 flex-shrink-0 text-accent" aria-hidden="true" />
                   <div>
-                    <p className="text-small font-medium text-text">No documentation yet</p>
+                    <p className="text-small font-medium text-text">
+                      <Tx en="No documentation yet" id="Belum ada dokumentasi" />
+                    </p>
                     <p className="mt-1 text-small text-muted">
-                      Screenshots or demo videos for this project are not available yet.
+                      <Tx
+                        en="Screenshots or demo videos for this project are not available yet."
+                        id="Tangkapan layar atau video demo untuk proyek ini belum tersedia."
+                      />
                     </p>
                   </div>
                 </div>
               ) : (
                 <div className="space-y-8">
                   {project.videos.length > 0 && (
-                    <section aria-label="Video">
-                      <p className="eyebrow mb-3">Video</p>
+                    <section aria-label={lang === 'id' ? 'Video' : 'Video'}>
+                      <p className="eyebrow mb-3">
+                        <Tx en="Video" id="Video" />
+                      </p>
                       <div className="grid gap-4">
                         {project.videos.map((src) => (
                           <div
@@ -275,10 +297,17 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                               preload="metadata"
                               playsInline
                               className="h-full w-full"
-                              aria-label={`${project.title} demo video`}
+                              aria-label={
+                                lang === 'id'
+                                  ? `Video demo ${project.title}`
+                                  : `${project.title} demo video`
+                              }
                             >
                               <source src={src} type="video/mp4" />
-                              Your browser does not support the video player.
+                              <Tx
+                                en="Your browser does not support the video player."
+                                id="Browser Anda tidak mendukung pemutar video."
+                              />
                             </video>
                           </div>
                         ))}
@@ -287,8 +316,10 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   )}
 
                   {project.images.length > 0 && (
-                    <section aria-label="Screenshot">
-                      <p className="eyebrow mb-3">Screenshot</p>
+                    <section aria-label={lang === 'id' ? 'Tangkapan layar' : 'Screenshot'}>
+                      <p className="eyebrow mb-3">
+                        <Tx en="Screenshot" id="Tangkapan layar" />
+                      </p>
                       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         {project.images.map((src, i) => (
                           <button
@@ -296,11 +327,19 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                             type="button"
                             className="doc-thumb"
                             onClick={() => setViewer(i)}
-                            aria-label={`Enlarge screenshot ${i + 1} of ${project.images.length}`}
+                            aria-label={
+                              lang === 'id'
+                                ? `Perbesar tangkapan layar ${i + 1} dari ${project.images.length}`
+                                : `Enlarge screenshot ${i + 1} of ${project.images.length}`
+                            }
                           >
                             <Image
                               src={src}
-                              alt={`${project.title} screenshot ${i + 1}`}
+                              alt={
+                                lang === 'id'
+                                  ? `Tangkapan layar ${project.title} ${i + 1}`
+                                  : `${project.title} screenshot ${i + 1}`
+                              }
                               fill
                               className="object-cover object-top"
                               sizes="(max-width: 640px) 100vw, 440px"
@@ -323,7 +362,11 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             style={{ background: 'color-mix(in srgb, #000 92%, transparent)', animation: 'fade 160ms ease both' }}
             role="dialog"
             aria-modal="true"
-            aria-label={`Screenshot ${viewer + 1} of ${project.images.length}`}
+            aria-label={
+              lang === 'id'
+                ? `Tangkapan layar ${viewer + 1} dari ${project.images.length}`
+                : `Screenshot ${viewer + 1} of ${project.images.length}`
+            }
             onMouseDown={(e) => {
               if (e.target === e.currentTarget) setViewer(null)
             }}
@@ -331,7 +374,11 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             <div className="relative h-full w-full p-4 sm:p-10">
               <Image
                 src={project.images[viewer]}
-                alt={`${project.title} screenshot ${viewer + 1}`}
+                alt={
+                  lang === 'id'
+                    ? `Tangkapan layar ${project.title} ${viewer + 1}`
+                    : `${project.title} screenshot ${viewer + 1}`
+                }
                 fill
                 className="object-contain"
                 sizes="100vw"
@@ -342,7 +389,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             <button
               type="button"
               onClick={() => setViewer(null)}
-              aria-label="Close image"
+              aria-label={lang === 'id' ? 'Tutup gambar' : 'Close image'}
               className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
             >
               <X size={18} aria-hidden="true" />
@@ -353,7 +400,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <button
                   type="button"
                   onClick={() => setViewer((viewer - 1 + project.images.length) % project.images.length)}
-                  aria-label="Previous image"
+                  aria-label={lang === 'id' ? 'Gambar sebelumnya' : 'Previous image'}
                   className="absolute left-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
                 >
                   <ChevronLeft size={20} aria-hidden="true" />
@@ -361,7 +408,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <button
                   type="button"
                   onClick={() => setViewer((viewer + 1) % project.images.length)}
-                  aria-label="Next image"
+                  aria-label={lang === 'id' ? 'Gambar berikutnya' : 'Next image'}
                   className="absolute right-4 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
                 >
                   <ChevronRight size={20} aria-hidden="true" />

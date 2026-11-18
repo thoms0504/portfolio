@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { ArrowRight, ChevronDown, Download } from 'lucide-react'
 import { BrandIcon, type BrandId } from '@/components/ui/BrandIcon'
 import { TechLogo } from '@/components/ui/TechLogo'
+import { Tx } from '@/components/i18n/Tx'
+import { useLang } from '@/components/i18n/LanguageProvider'
 
 const ROLES = ['Data Scientist', 'Full-Stack Developer', 'AI / LLM Engineer', 'Remote Sensing & GeoAI']
 
@@ -19,6 +21,7 @@ const FLOATING: { tech: string; style: React.CSSProperties; delay: string }[] = 
 export interface HeroStat {
   value: number
   label: string
+  labelId?: string
 }
 
 interface HeroProps {
@@ -74,6 +77,7 @@ function hexToRgb(hex: string): [number, number, number] {
 }
 
 export function HeroSection({ name, email, links, stats }: HeroProps) {
+  const { lang } = useLang()
   const [roleIdx, setRoleIdx] = useState(0)
   const [typed, setTyped] = useState('')
   const [deleting, setDeleting] = useState(false)
@@ -187,7 +191,10 @@ export function HeroSection({ name, email, links, stats }: HeroProps) {
   ]
 
   return (
-    <section aria-label="Introduction" className="relative flex min-h-[94vh] flex-col justify-center overflow-hidden">
+    <section
+      aria-label={lang === 'id' ? 'Perkenalan' : 'Introduction'}
+      className="relative flex min-h-[94vh] flex-col justify-center overflow-hidden"
+    >
       {/* Background */}
       <div className="grid-bg absolute inset-0" aria-hidden="true" />
       <canvas
@@ -236,7 +243,7 @@ export function HeroSection({ name, email, links, stats }: HeroProps) {
                 />
                 <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: 'var(--accent)' }} />
               </span>
-              Open to opportunities
+              <Tx en="Open to opportunities" id="Terbuka untuk peluang" />
             </div>
 
             <h1 className="hero-animate text-display mb-4" style={{ animationDelay: '70ms' }}>
@@ -266,18 +273,20 @@ export function HeroSection({ name, email, links, stats }: HeroProps) {
               className="hero-animate mb-9 max-w-xl text-body text-muted"
               style={{ animationDelay: '210ms' }}
             >
-              Data Scientist and IT Specialist at BPS Provinsi Lampung. I build data pipelines, ML and GeoAI
-              applications, and the web platforms around them, from the model to the interface.
+              <Tx
+                en="Data Scientist and IT Specialist at BPS Provinsi Lampung. I build data pipelines, ML and GeoAI applications, and the web platforms around them, from the model to the interface."
+                id="Data Scientist dan IT Specialist di BPS Provinsi Lampung. Saya membangun pipeline data, aplikasi ML dan GeoAI, serta platform web yang menyertainya, mulai dari model hingga antarmuka."
+              />
             </p>
 
             <div className="hero-animate mb-9 flex flex-wrap gap-3" style={{ animationDelay: '280ms' }}>
               <Link href="/projects" className="btn btn-primary">
-                View projects
+                <Tx en="View projects" id="Lihat proyek" />
                 <ArrowRight size={16} aria-hidden="true" />
               </Link>
               <a href="/ThomsonSibuea_Resume.pdf" download className="btn btn-secondary">
                 <Download size={16} aria-hidden="true" />
-                Resume
+                <Tx en="Resume" id="CV" />
               </a>
             </div>
 
@@ -377,8 +386,8 @@ export function HeroSection({ name, email, links, stats }: HeroProps) {
                 className="mt-1 text-xs text-muted"
                 style={{ fontFamily: 'var(--font-geist-mono), monospace' }}
               >
-                {s.label}
-              </div>
+                  <Tx en={s.label} id={s.labelId} />
+                </div>
             </div>
           ))}
         </div>
