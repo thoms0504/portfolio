@@ -1,10 +1,12 @@
+import { Tx } from '@/components/i18n/Tx'
+
 interface TimelineEntryProps {
   period: string
   title: string
   subtitle: string
   meta?: string
-  description?: string
-  highlights?: string[]
+  description?: React.ReactNode
+  highlights?: React.ReactNode[]
 }
 
 export function TimelineEntry({
@@ -31,7 +33,11 @@ export function TimelineEntry({
       <div className="tl-card">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1">
           <p className="text-h3 text-text">{title}</p>
-          {isCurrent && <span className="tl-badge">Current</span>}
+          {isCurrent && (
+            <span className="tl-badge">
+              <Tx en="Current" id="Saat ini" />
+            </span>
+          )}
         </div>
         <p className="text-body text-muted">{subtitle}</p>
         {meta && <p className="text-small text-faint mt-1">{meta}</p>}

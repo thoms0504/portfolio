@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import { Sun, Moon } from 'lucide-react'
+import { useLang } from '@/components/i18n/LanguageProvider'
 import { cn } from '@/lib/cn'
 
 export function ThemeToggle({ className }: { className?: string }) {
+  const { lang } = useLang()
   const [theme, setTheme] = useState<'light' | 'dark' | null>(null)
 
   useEffect(() => {
@@ -26,7 +28,15 @@ export function ThemeToggle({ className }: { className?: string }) {
   return (
     <button
       onClick={toggle}
-      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-label={
+        lang === 'id'
+          ? theme === 'dark'
+            ? 'Ubah ke mode terang'
+            : 'Ubah ke mode gelap'
+          : theme === 'dark'
+            ? 'Switch to light mode'
+            : 'Switch to dark mode'
+      }
       className={cn(
         'flex items-center justify-center w-11 h-11 rounded-control text-muted hover:text-text transition-colors duration-[120ms] ease-[cubic-bezier(0.2,0,0,1)]',
         className

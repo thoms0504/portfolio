@@ -3,6 +3,8 @@
 import { useMemo, useState } from 'react'
 import { TechLogo } from '@/components/ui/TechLogo'
 import { TECH_CATEGORIES, getTechVisual, type TechCategory } from '@/lib/tech'
+import { Tx } from '@/components/i18n/Tx'
+import { useLang } from '@/components/i18n/LanguageProvider'
 
 export interface TechUsage {
   name: string
@@ -17,6 +19,7 @@ interface TechShowcaseProps {
 }
 
 export function TechShowcase({ items }: TechShowcaseProps) {
+  const { lang } = useLang()
   const [active, setActive] = useState<'all' | TechCategory>('all')
 
   const enriched = useMemo(
@@ -27,10 +30,11 @@ export function TechShowcase({ items }: TechShowcaseProps) {
   const tabs = useMemo(() => {
     const present = new Set(enriched.map((e) => e.visual.def.category))
     return [
-      { key: 'all' as const, label: 'All', count: enriched.length },
+      { key: 'all' as const, label: 'All', labelId: 'Semua', count: enriched.length },
       ...TECH_CATEGORIES.filter((c) => present.has(c.key)).map((c) => ({
         key: c.key,
         label: c.label,
+        labelId: c.labelId,
         count: enriched.filter((e) => e.visual.def.category === c.key).length,
       })),
     ]
@@ -40,7 +44,11 @@ export function TechShowcase({ items }: TechShowcaseProps) {
 
   return (
     <div>
-      <div className="seg mb-8" role="tablist" aria-label="Filter technologies by category">
+      <div
+        className="seg mb-8"
+        role="tablist"
+        aria-label={lang === 'id' ? 'Filter teknologi berdasarkan kategori' : 'Filter technologies by category'}
+      >
         {tabs.map((t) => (
           <button
             key={t.key}
@@ -49,7 +57,7 @@ export function TechShowcase({ items }: TechShowcaseProps) {
             className="seg-btn"
             onClick={() => setActive(t.key)}
           >
-            {t.label}
+            <Tx en={t.label} id={t.labelId} />
             <span className="ml-1.5 text-xs opacity-60 tabular-nums">{t.count}</span>
           </button>
         ))}
@@ -80,9 +88,10 @@ export function TechShowcase({ items }: TechShowcaseProps) {
                 className="text-xs text-muted mt-0.5"
                 style={{ fontFamily: 'var(--font-geist-mono), monospace' }}
               >
-                {item.count === 0
-                  ? 'skill'
-                  : `${item.count} ${item.count === 1 ? 'project' : 'projects'}`}
+                <Tx
+                  en={item.count === 0 ? 'skill' : `${item.count} ${item.count === 1 ? 'project' : 'projects'}`}
+                  id={item.count === 0 ? 'keahlian' : `${item.count} proyek`}
+                />
               </p>
             </div>
           </div>
