@@ -1,0 +1,72 @@
+{
+  "headline": "Data Scientist dan IT Specialist di BPS Provinsi Lampung. Saya membangun pipeline data, aplikasi ML dan GeoAI, serta platform web yang menyertainya.",
+  "about": "Saya adalah ASN di Badan Pusat Statistik (BPS) Provinsi Lampung, bekerja sebagai IT Specialist di Divisi IPDS (Integration, Processing and Dissemination of Statistics) sejak menyelesaikan pendidikan sarjana Statistika Komputasi di Politeknik Statistika STIS pada 2024.\n\nPekerjaan saya berada di titik temu antara statistik resmi, lingkungan, dan teknologi. Saya membangun aplikasi web yang menyederhanakan pekerjaan kantor sehari-hari, serta menggunakan remote sensing, machine learning, deep learning, dan LLM dengan retrieval (RAG) untuk menghasilkan data resmi yang lebih baik, lebih cepat, dan lebih terperinci. Proyek di sini mencakup chatbot AI dan sistem rekomendasi hingga dashboard monitoring survei, platform antrean dan SDM, serta pipeline estimasi risiko kebakaran hutan berbasis satelit.\n\nSebelum di BPS Lampung, saya bekerja sebagai data analyst di Kementerian Perindustrian Republik Indonesia, menganalisis tren ekspor dan impor, serta menjalani magang IT di BPS Kota Cilegon. Skripsi saya memperkirakan area potensi kekeringan dari citra satelit dengan machine learning.",
+  "experience": [
+    {
+      "description": "Membangun aplikasi web untuk BPS Lampung dan menerapkan remote sensing, machine learning, deep learning, serta GeoAI pada statistik resmi. Pekerjaan mencakup monitoring survei (SIMONA), portal layanan statistik TALITA, platform profil pegawai WAWAI, sistem antrean dan buku tamu, serta asisten berbasis RAG.",
+      "highlights": [
+        "Membuat dan memantau 5-6 konten statistik seperti infografis setiap bulan.",
+        "Melakukan layanan teknologi informasi kepada unit kerja internal.",
+        "Melakukan pengolahan dan diseminasi statistik melalui produk statistik yang berkualitas.",
+        "Bertanggung jawab atas koreksi dan pembaruan website instansi.",
+        "Melakukan pengolahan data terkait survei dan sensus."
+      ]
+    },
+    {
+      "description": "Menyelesaikan pelatihan on-the-job di BPS-Statistics Indonesia, berkontribusi pada migrasi lebih dari 500 GB data sensus dan survei nasional ke infrastruktur server baru.",
+      "highlights": [
+        "Berpartisipasi dalam proyek migrasi data dari server lama ke infrastruktur server terbaru di BPS-Statistics Indonesia (Kantor Pusat), mencakup lebih dari 500 GB data.",
+        "Memigrasikan dan memverifikasi data dari Sensus Pertanian (ST), Sensus Ekonomi (SE), dan survei nasional lainnya untuk memastikan kelengkapan dan konsistensi setelah transfer.",
+        "Menjaga integritas data lintas kumpulan data nasional dengan mematuhi standar keamanan data tingkat pemerintah.",
+        "Mendokumentasikan progres pekerjaan dan berkoordinasi dengan tim IT serta supervisor di lokasi."
+      ]
+    },
+    {
+      "description": "",
+      "highlights": [
+        "Bersama rekan, mencari dan mengolah data perkembangan ekspor dan impor Indonesia untuk 50+ jenis Harmonized System (HS) Code, serta mengidentifikasi industri potensial bagi Indonesia dalam beberapa tahun ke depan.",
+        "Mengemas data yang terkumpul ke dalam tabel dan grafik informatif untuk memberikan wawasan bisnis bagi instansi.",
+        "Mengingatkan 100+ pemangku kepentingan dari berbagai industri untuk melaporkan aktivitas produksi mereka setiap bulan."
+      ]
+    },
+    {
+      "description": "",
+      "highlights": [
+        "Memasukkan dan mengonfirmasi data survei dari 50+ perusahaan akomodasi dari formulir kertas ke dalam website.",
+        "Membuat dan mengedit video yang menampilkan prestasi statistikwan teladan, meningkatkan apresiasi dan motivasi staf di BPS Kota Cilegon.",
+        "Bersama tim, melakukan pengecekan lapangan terkait pencacahan data registrasi sosial ekonomi (Regsosek) di 5 kecamatan di Kota Cilegon.",
+        "Bersama rekan magang, merancang sistem honorarium mitra BPS Cilegon menggunakan Google Form, Google Sheets, dan Looker Studio yang digunakan untuk membantu 30+ mitra."
+      ]
+    },
+    {
+      "description": "",
+      "highlights": [
+        "Bersama tim, membangun website dashboard untuk hasil Praktik Kerja Lapangan dengan CodeIgniter 4 sebagai framework. Dashboard ini menyajikan penelitian yang dilakukan saat praktik kerja lapangan, terbagi menjadi 4 studi."
+      ]
+    },
+    {
+      "description": "",
+      "highlights": [
+        "Bersama tim, membuat 20+ grafik dan tabel untuk penelitian dalam kegiatan praktik lapangan dan mempublikasikannya ke website dashboard praktik lapangan."
+      ]
+    },
+    {
+      "description": "Memverifikasi silang dan memvalidasi data dari survei Registrasi Sosial Ekonomi (REGSOSEK) agar tetap benar dan konsisten dengan kondisi riil. Peran ini memerlukan interaksi langsung dengan responden, termasuk wawancara mendalam untuk memvalidasi kebenaran jawaban mereka, dengan ketelitian, kemampuan komunikasi yang baik, dan komitmen yang kuat pada standar data.",
+      "highlights": []
+    }
+  ],
+  "education": [
+    {
+      "description": "Skripsi: Estimasi Area Potensi Kekeringan Menggunakan Pendekatan Machine Learning: Citra Satelit",
+      "highlights": [
+        "Komputasi.Net (Pemrograman)",
+        "Descent STIS (Data Science)",
+        "Bulstik STIS (Bulu tangkis)"
+      ]
+    },
+    {
+      "description": "Mahasiswa tahun pertama. IPK 3,58.",
+      "highlights": []
+    }
+  ]
+}
