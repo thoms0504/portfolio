@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import { getProfile } from '@/lib/profile'
+import { getLocalizedProfile } from '@/lib/profile-i18n'
 import { getAllProjects } from '@/lib/projects'
+import { Tx } from '@/components/i18n/Tx'
 import { ExperienceTimeline, EducationTimeline } from '@/components/timeline/Timeline'
 import { SkillGroup } from '@/components/skills/SkillGroup'
 import { CertificationList } from '@/components/certifications/CertificationList'
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 const strip = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
 
 export default function ResumePage() {
-  const profile = getProfile()
+  const { en: profile, id: profileId } = getLocalizedProfile()
   const projects = getAllProjects()
 
   const contact = [
@@ -28,9 +29,13 @@ export default function ResumePage() {
     <div className="mx-auto max-w-content page-px pb-24 pt-28">
       <div className="mb-10 flex flex-wrap items-start justify-between gap-6">
         <div>
-          <p className="eyebrow mb-4 no-print">Resume</p>
+          <p className="eyebrow mb-4 no-print">
+            <Tx en="Resume" id="CV" />
+          </p>
           <h1 className="text-h1 mb-2">{profile.name}</h1>
-          <p className="max-w-prose text-body text-muted">{profile.headline}</p>
+          <p className="max-w-prose text-body text-muted">
+            <Tx en={profile.headline} id={profileId.headline} />
+          </p>
           <p className="mt-2 text-small text-muted">{profile.location}</p>
         </div>
         <PrintButton className="btn btn-secondary no-print flex-shrink-0" />
@@ -54,37 +59,39 @@ export default function ResumePage() {
       {/* Summary */}
       <section aria-labelledby="res-sum-heading" className="mb-12 border-b border-line pb-12">
         <h2 id="res-sum-heading" className="text-h2 mb-6">
-          Summary
+          <Tx en="Summary" id="Ringkasan" />
         </h2>
-        <p className="max-w-prose whitespace-pre-line text-body text-muted">{profile.about}</p>
+        <p className="max-w-prose whitespace-pre-line text-body text-muted">
+          <Tx en={profile.about} id={profileId.about} />
+        </p>
       </section>
 
       {/* Experience */}
       {profile.experience.length > 0 && (
         <section aria-labelledby="res-exp-heading" className="mb-12 border-b border-line pb-12">
-          <h2 id="res-exp-heading" className="text-h2 mb-8">
-            Experience
-          </h2>
-          <ExperienceTimeline items={profile.experience} />
+            <h2 id="res-exp-heading" className="text-h2 mb-8">
+              <Tx en="Experience" id="Pengalaman" />
+            </h2>
+            <ExperienceTimeline items={profile.experience} itemsId={profileId.experience} />
         </section>
       )}
 
       {/* Education */}
       {profile.education.length > 0 && (
         <section aria-labelledby="res-edu-heading" className="mb-12 border-b border-line pb-12">
-          <h2 id="res-edu-heading" className="text-h2 mb-8">
-            Education
-          </h2>
-          <EducationTimeline items={profile.education} />
+            <h2 id="res-edu-heading" className="text-h2 mb-8">
+              <Tx en="Education" id="Pendidikan" />
+            </h2>
+            <EducationTimeline items={profile.education} itemsId={profileId.education} />
         </section>
       )}
 
       {/* Certifications */}
       {profile.certifications && profile.certifications.length > 0 && (
         <section aria-labelledby="res-cert-heading" className="mb-12 border-b border-line pb-12">
-          <h2 id="res-cert-heading" className="text-h2 mb-8">
-            Certifications
-          </h2>
+            <h2 id="res-cert-heading" className="text-h2 mb-8">
+              <Tx en="Certifications" id="Sertifikasi" />
+            </h2>
           <CertificationList items={profile.certifications} />
         </section>
       )}
@@ -92,7 +99,7 @@ export default function ResumePage() {
       {/* Projects */}
       <section aria-labelledby="res-proj-heading" className="mb-12 border-b border-line pb-12">
         <h2 id="res-proj-heading" className="text-h2 mb-8">
-          Projects
+          <Tx en="Projects" id="Proyek" />
         </h2>
         <ul className="flex flex-col gap-6">
           {projects.map((p) => (
@@ -106,7 +113,9 @@ export default function ResumePage() {
                   {p.stack.slice(0, 6).join(' / ')}
                 </span>
               </div>
-              <p className="mt-1 max-w-prose text-small text-muted">{p.summary}</p>
+              <p className="mt-1 max-w-prose text-small text-muted">
+                <Tx en={p.summary} id={p.summaryId} />
+              </p>
               {(p.demoUrl || p.repoUrl) && (
                 <p
                   className="mt-1 text-xs"
@@ -132,12 +141,12 @@ export default function ResumePage() {
       {/* Skills */}
       <section aria-labelledby="res-skills-heading">
         <h2 id="res-skills-heading" className="text-h2 mb-8">
-          Skills
+          <Tx en="Skills" id="Keahlian" />
         </h2>
         <div className="grid gap-8 sm:grid-cols-2">
-          <SkillGroup label="Languages" items={profile.skills.languages} />
-          <SkillGroup label="Frameworks, UI & backend" items={profile.skills.frameworks} />
-          <SkillGroup label="Databases" items={profile.skills.databases} />
+          <SkillGroup label="Languages" labelId="Bahasa pemrograman" items={profile.skills.languages} />
+          <SkillGroup label="Frameworks, UI & backend" labelId="Framework, UI & backend" items={profile.skills.frameworks} />
+          <SkillGroup label="Databases" labelId="Database" items={profile.skills.databases} />
           <SkillGroup label="AI / ML" items={profile.skills.ai ?? []} />
           <SkillGroup label="Geospatial" items={profile.skills.geospatial ?? []} />
           <SkillGroup label="Tools" items={profile.skills.tools} />

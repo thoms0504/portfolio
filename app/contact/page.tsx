@@ -3,6 +3,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { getProfile } from '@/lib/profile'
 import { ContactForm } from '@/components/contact-form/ContactForm'
 import { BrandIcon, type BrandId } from '@/components/ui/BrandIcon'
+import { Tx } from '@/components/i18n/Tx'
 
 export const metadata: Metadata = {
   title: 'Contact',
@@ -21,6 +22,7 @@ export default function ContactPage() {
         label: 'Email',
         detail: profile.email,
         note: 'Best for detailed project briefs',
+        noteId: 'Paling cocok untuk detail proyek',
         href: `mailto:${profile.email}`,
         external: false,
       },
@@ -28,7 +30,9 @@ export default function ContactPage() {
         id: 'whatsapp',
         label: 'WhatsApp',
         detail: 'Direct chat',
+        detailId: 'Chat langsung',
         note: 'Quick discussion',
+        noteId: 'Diskusi cepat',
         href: profile.links.whatsapp,
         external: true,
       },
@@ -37,6 +41,7 @@ export default function ContactPage() {
         label: 'LinkedIn',
         detail: handle(profile.links.linkedin),
         note: 'Professional network',
+        noteId: 'Jaringan profesional',
         href: profile.links.linkedin,
         external: true,
       },
@@ -45,6 +50,7 @@ export default function ContactPage() {
         label: 'GitHub',
         detail: handle(profile.links.github),
         note: 'Code and project repositories',
+        noteId: 'Kode dan repositori proyek',
         href: profile.links.github,
         external: true,
       },
@@ -53,6 +59,7 @@ export default function ContactPage() {
         label: 'Instagram',
         detail: handle(profile.links.instagram),
         note: 'Updates and activities',
+        noteId: 'Pembaruan dan aktivitas',
         href: profile.links.instagram,
         external: true,
       },
@@ -61,7 +68,9 @@ export default function ContactPage() {
     id: BrandId
     label: string
     detail: string
+    detailId?: string
     note: string
+    noteId?: string
     href: string
     external: boolean
   }[]
@@ -69,17 +78,25 @@ export default function ContactPage() {
   return (
     <div className="mx-auto max-w-content page-px pb-24 pt-28">
       <div className="mb-14 max-w-2xl">
-        <p className="eyebrow mb-4">Let&apos;s work together</p>
-        <h1 className="text-h1 mb-4">Get in touch</h1>
+        <p className="eyebrow mb-4">
+          <Tx en="Let's work together" id="Mari bekerja sama" />
+        </p>
+        <h1 className="text-h1 mb-4">
+          <Tx en="Get in touch" id="Hubungi saya" />
+        </h1>
         <p className="text-body text-muted">
-          Open to collaboration, freelance projects, and full-time roles. Whether you have a clear brief or
-          just an idea, reach out through one of the channels below or send a message through the form.
+          <Tx
+            en="Open to collaboration, freelance projects, and full-time roles. Whether you have a clear brief or just an idea, reach out through one of the channels below or send a message through the form."
+            id="Terbuka untuk kolaborasi, proyek freelance, dan peran full-time. Baik Anda sudah punya detail proyek yang jelas maupun hanya sebuah ide, hubungi saya lewat salah satu kanal di bawah atau kirim pesan lewat formulir."
+          />
         </p>
       </div>
 
       <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
         <div>
-          <h2 className="text-h3 mb-5">Contact me</h2>
+          <h2 className="text-h3 mb-5">
+            <Tx en="Contact me" id="Hubungi saya" />
+          </h2>
           <ul className="flex flex-col gap-2.5">
             {channels.map((c) => (
               <li key={c.id}>
@@ -98,9 +115,11 @@ export default function ContactPage() {
                       className="block truncate text-xs text-muted"
                       style={{ fontFamily: 'var(--font-geist-mono), monospace' }}
                     >
-                      {c.detail}
+                      <Tx en={c.detail} id={c.detailId} />
                     </span>
-                    <span className="mt-0.5 block text-xs text-faint">{c.note}</span>
+                    <span className="mt-0.5 block text-xs text-faint">
+                      <Tx en={c.note} id={c.noteId} />
+                    </span>
                   </span>
                   <ArrowUpRight size={16} className="text-faint" aria-hidden="true" />
                 </a>
@@ -110,14 +129,21 @@ export default function ContactPage() {
         </div>
 
         <div>
-          <h2 className="text-h3 mb-2">Send a message</h2>
+          <h2 className="text-h3 mb-2">
+            <Tx en="Send a message" id="Kirim pesan" />
+          </h2>
           <p className="mb-6 text-small text-muted">
-            Tell me about your project, idea, or collaboration opportunity.
+            <Tx
+              en="Tell me about your project, idea, or collaboration opportunity."
+              id="Ceritakan proyek, ide, atau peluang kolaborasi Anda."
+            />
           </p>
           {profile.links.whatsapp ? (
             <ContactForm whatsappUrl={profile.links.whatsapp} />
           ) : (
-            <p className="text-body text-muted">Use one of the listed channels to reach me.</p>
+            <p className="text-body text-muted">
+              <Tx en="Use one of the listed channels to reach me." id="Gunakan salah satu kanal di atas untuk menghubungi saya." />
+            </p>
           )}
         </div>
       </div>

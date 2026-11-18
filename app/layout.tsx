@@ -4,6 +4,8 @@ import { GeistMono } from 'geist/font/mono'
 import { Nav } from '@/components/nav/Nav'
 import { RevealObserver } from '@/components/ui/RevealObserver'
 import { ChatWidget } from '@/components/chatbot/ChatWidget'
+import { LanguageProvider } from '@/components/i18n/LanguageProvider'
+import { Tx } from '@/components/i18n/Tx'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -43,39 +45,42 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
       <head>
-        {/* Theme init — dark by default (Stratus-style); a saved choice wins. */}
+        {/* Applied before paint so both the theme and the language are correct on first render. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})()`,
+            __html: `(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);var l=localStorage.getItem('lang')==='id'?'id':'en';document.documentElement.setAttribute('data-lang',l);document.documentElement.lang=l;})()`,
           }}
         />
       </head>
       <body>
-        <a href="#main-content" className="skip-link">
-          Skip to content
-        </a>
-        <Nav />
-        <RevealObserver />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <footer className="border-t border-line bg-surface">
-          <div className="max-w-content mx-auto page-px py-10 flex flex-col gap-6 text-small text-muted">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div>
-                <span className="font-semibold" style={{ color: 'var(--text)' }}>Thomson Sibuea</span>
-                <span className="ml-2 opacity-60">· Data Scientist & Full-Stack Developer</span>
+        <LanguageProvider>
+          <a href="#main-content" className="skip-link">
+            <Tx en="Skip to content" id="Lewati ke konten" />
+          </a>
+          <Nav />
+          <RevealObserver />
+          <main id="main-content" tabIndex={-1}>
+            {children}
+          </main>
+          <footer className="border-t border-line bg-surface">
+            <div className="max-w-content mx-auto page-px py-10 flex flex-col gap-6 text-small text-muted">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div>
+                  <span className="font-semibold" style={{ color: 'var(--text)' }}>Thomson Sibuea</span>
+                  <span className="ml-2 opacity-60">· Data Scientist & Full-Stack Developer</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="opacity-60">Lampung, Indonesia</span>
+                </div>
               </div>
-              <div className="flex items-center gap-4">
-                <span className="opacity-60">Lampung, Indonesia</span>
-              </div>
+              <p className="border-t border-line pt-6 opacity-60">
+                &copy; {new Date().getFullYear()} Thomson Sibuea.{' '}
+                <Tx en="All rights reserved." id="Seluruh hak cipta dilindungi." />
+              </p>
             </div>
-            <p className="border-t border-line pt-6 opacity-60">
-              &copy; {new Date().getFullYear()} Thomson Sibuea. All rights reserved.
-            </p>
-          </div>
-        </footer>
-        <ChatWidget />
+          </footer>
+          <ChatWidget />
+        </LanguageProvider>
       </body>
     </html>
   )

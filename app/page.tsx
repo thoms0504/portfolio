@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, ArrowUpRight, Mail } from 'lucide-react'
-import { getProfile } from '@/lib/profile'
+import { getLocalizedProfile } from '@/lib/profile-i18n'
 import { getAllProjects } from '@/lib/projects'
+import { Tx } from '@/components/i18n/Tx'
 import { HeroSection } from '@/components/hero/HeroSection'
 import { ProjectGrid } from '@/components/projects/ProjectGrid'
 import { TechShowcase, type TechUsage } from '@/components/skills/TechShowcase'
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
-  const profile = getProfile()
+  const { en: profile, id: profileId } = getLocalizedProfile()
   const projects = getAllProjects()
   const featured = projects.filter((p) => p.featured)
 
@@ -40,19 +41,20 @@ export default function Home() {
 
   const docCount = projects.reduce((n, p) => n + p.images.length + p.videos.length, 0)
   const stats = [
-    { value: projects.length, label: 'projects' },
-    { value: techUsage.length, label: 'technologies' },
-    { value: docCount, label: 'screenshots & demos' },
-    { value: profile.githubRepos ?? 0, label: 'github repositories' },
+    { value: projects.length, label: 'projects', labelId: 'proyek' },
+    { value: techUsage.length, label: 'technologies', labelId: 'teknologi' },
+    { value: docCount, label: 'screenshots & demos', labelId: 'tangkapan layar & demo' },
+    { value: profile.githubRepos ?? 0, label: 'github repositories', labelId: 'repositori github' },
   ]
 
   const handle = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
 
-  const channels: { id: BrandId; label: string; detail: string; href: string }[] = [
+  const channels: { id: BrandId; label: string; detail: string; detailId?: string; href: string }[] = [
     profile.links.whatsapp && {
       id: 'whatsapp' as const,
       label: 'WhatsApp',
       detail: 'Direct chat',
+      detailId: 'Chat langsung',
       href: profile.links.whatsapp,
     },
     profile.links.linkedin && {
@@ -73,7 +75,7 @@ export default function Home() {
       detail: handle(profile.links.instagram),
       href: profile.links.instagram,
     },
-  ].filter(Boolean) as { id: BrandId; label: string; detail: string; href: string }[]
+  ].filter(Boolean) as { id: BrandId; label: string; detail: string; detailId?: string; href: string }[]
 
   return (
     <>
@@ -91,22 +93,32 @@ export default function Home() {
         <div className="mx-auto max-w-content page-px">
           <div className="reveal mb-10 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="eyebrow mb-3">Portfolio</p>
+              <p className="eyebrow mb-3">
+                <Tx en="Portfolio" id="Portofolio" />
+              </p>
               <h2 id="selected-work-heading" className="text-h2">
-                Selected work
+                <Tx en="Selected work" id="Proyek pilihan" />
               </h2>
               <p className="mt-2 max-w-xl text-body text-muted">
-                Click a card to see the description, tech stack, and documentation without leaving the page.
+                <Tx
+                  en="Click a card to see the description, tech stack, and documentation without leaving the page."
+                  id="Klik kartu untuk melihat deskripsi, tech stack, dan dokumentasi tanpa meninggalkan halaman."
+                />
               </p>
             </div>
             <Link href="/projects" className="btn btn-secondary btn-sm">
-              All {projects.length} projects
+              <Tx
+                en={`All ${projects.length} projects`}
+                id={`Semua ${projects.length} proyek`}
+              />
               <ArrowRight size={14} aria-hidden="true" />
             </Link>
           </div>
 
           {featured.length === 0 ? (
-            <p className="py-12 text-body text-muted">No featured projects yet.</p>
+            <p className="py-12 text-body text-muted">
+              <Tx en="No featured projects yet." id="Belum ada proyek pilihan." />
+            </p>
           ) : (
             <ProjectGrid projects={featured} />
           )}
@@ -119,10 +131,13 @@ export default function Home() {
           <div className="reveal mb-10">
             <p className="eyebrow mb-3">Tech stack</p>
             <h2 id="skills-heading" className="text-h2">
-              Technologies I work with
+              <Tx en="Technologies I work with" id="Teknologi yang saya gunakan" />
             </h2>
             <p className="mt-2 max-w-xl text-body text-muted">
-              Languages, UI frameworks, backend, databases, and tools. The number on each tile shows how many projects use it.
+              <Tx
+                en="Languages, UI frameworks, backend, databases, and tools. The number on each tile shows how many projects use it."
+                id="Bahasa, framework UI, backend, database, dan tools. Angka pada setiap ubin menunjukkan jumlah proyek yang menggunakannya."
+              />
             </p>
           </div>
           <div className="reveal">
@@ -137,17 +152,22 @@ export default function Home() {
           <div className="mx-auto max-w-content page-px">
             <div className="reveal mb-10 flex items-end justify-between gap-4">
               <div>
-                <p className="eyebrow mb-3">Experience</p>
+                <p className="eyebrow mb-3">
+                  <Tx en="Experience" id="Pengalaman" />
+                </p>
                 <h2 id="experience-heading" className="text-h2">
-                  Work
+                  <Tx en="Work" id="Kerja" />
                 </h2>
               </div>
               <Link href="/about" className="text-small text-accent hover:text-accent-strong">
-                More about me
+                <Tx en="More about me" id="Selengkapnya tentang saya" />
               </Link>
             </div>
             <div className="reveal">
-              <ExperienceTimeline items={profile.experience.slice(0, 3)} />
+              <ExperienceTimeline
+                items={profile.experience.slice(0, 3)}
+                itemsId={profileId.experience.slice(0, 3)}
+              />
             </div>
           </div>
         </section>
@@ -168,21 +188,25 @@ export default function Home() {
         <div className="relative z-10 mx-auto max-w-content page-px">
           <div className="grid items-start gap-10 md:grid-cols-[1fr_340px]">
             <div className="reveal">
-              <p className="eyebrow mb-3">Let&apos;s collaborate</p>
+              <p className="eyebrow mb-3">
+                <Tx en="Let's collaborate" id="Mari berkolaborasi" />
+              </p>
               <h2 id="contact-cta-heading" className="text-h1 mb-4">
-                Have a project in mind?
+                <Tx en="Have a project in mind?" id="Punya proyek dalam pikiran?" />
               </h2>
               <p className="mb-8 max-w-xl text-body text-muted">
-                Open to collaboration, freelance projects, and full-time roles. Send a message by email or
-                through one of the channels alongside.
+                <Tx
+                  en="Open to collaboration, freelance projects, and full-time roles. Send a message by email or through one of the channels alongside."
+                  id="Terbuka untuk kolaborasi, proyek freelance, dan peran full-time. Kirim pesan lewat email atau salah satu kanal di samping."
+                />
               </p>
               <div className="flex flex-wrap gap-3">
                 <a href={`mailto:${profile.email}`} className="btn btn-primary">
                   <Mail size={16} aria-hidden="true" />
-                  Send email
+                  <Tx en="Send email" id="Kirim email" />
                 </a>
                 <Link href="/contact" className="btn btn-secondary">
-                  Contact page
+                  <Tx en="Contact page" id="Halaman kontak" />
                   <ArrowRight size={14} aria-hidden="true" />
                 </Link>
               </div>
@@ -203,7 +227,7 @@ export default function Home() {
                         className="block truncate text-xs text-muted"
                         style={{ fontFamily: 'var(--font-geist-mono), monospace' }}
                       >
-                        {c.detail}
+                        <Tx en={c.detail} id={c.detailId} />
                       </span>
                     </span>
                     <ArrowUpRight size={15} className="text-faint" aria-hidden="true" />

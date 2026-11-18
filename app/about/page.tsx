@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { getProfile } from '@/lib/profile'
+import { getLocalizedProfile } from '@/lib/profile-i18n'
 import { ExperienceTimeline, EducationTimeline } from '@/components/timeline/Timeline'
 import { SkillGroup } from '@/components/skills/SkillGroup'
+import { Tx } from '@/components/i18n/Tx'
 
 export const metadata: Metadata = {
   title: 'About',
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 }
 
 export default function AboutPage() {
-  const profile = getProfile()
+  const { en: profile, id: profileId } = getLocalizedProfile()
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -32,8 +33,12 @@ export default function AboutPage() {
         {/* Header */}
         <div className="grid md:grid-cols-[1fr_auto] gap-12 items-start pb-12 border-b border-line">
           <div>
-            <h1 className="text-h1 mb-4">About</h1>
-            <p className="text-body text-muted max-w-prose whitespace-pre-line">{profile.about}</p>
+            <h1 className="text-h1 mb-4">
+              <Tx en="About" id="Tentang" />
+            </h1>
+            <p className="text-body text-muted max-w-prose whitespace-pre-line">
+              <Tx en={profile.about} id={profileId.about} />
+            </p>
             <div className="flex items-center gap-3 mt-4 text-small text-muted">
               <span>{profile.location}</span>
             </div>
@@ -56,9 +61,9 @@ export default function AboutPage() {
         {profile.experience.length > 0 && (
           <section aria-labelledby="exp-heading" className="py-12 border-b border-line">
             <h2 id="exp-heading" className="text-h2 mb-8">
-              Experience
+              <Tx en="Experience" id="Pengalaman" />
             </h2>
-            <ExperienceTimeline items={profile.experience} />
+            <ExperienceTimeline items={profile.experience} itemsId={profileId.experience} />
           </section>
         )}
 
@@ -66,21 +71,21 @@ export default function AboutPage() {
         {profile.education.length > 0 && (
           <section aria-labelledby="edu-heading" className="py-12 border-b border-line">
             <h2 id="edu-heading" className="text-h2 mb-8">
-              Education
+              <Tx en="Education" id="Pendidikan" />
             </h2>
-            <EducationTimeline items={profile.education} />
+            <EducationTimeline items={profile.education} itemsId={profileId.education} />
           </section>
         )}
 
         {/* Skills */}
         <section aria-labelledby="skills-heading" className="py-12">
           <h2 id="skills-heading" className="text-h2 mb-8">
-            Skills
+            <Tx en="Skills" id="Keahlian" />
           </h2>
           <div className="grid sm:grid-cols-2 gap-8">
-            <SkillGroup label="Languages" items={profile.skills.languages} />
-            <SkillGroup label="Frameworks, UI & backend" items={profile.skills.frameworks} />
-            <SkillGroup label="Databases" items={profile.skills.databases} />
+            <SkillGroup label="Languages" labelId="Bahasa pemrograman" items={profile.skills.languages} />
+            <SkillGroup label="Frameworks, UI & backend" labelId="Framework, UI & backend" items={profile.skills.frameworks} />
+            <SkillGroup label="Databases" labelId="Database" items={profile.skills.databases} />
             <SkillGroup label="AI / ML" items={profile.skills.ai ?? []} />
             <SkillGroup label="Geospatial" items={profile.skills.geospatial ?? []} />
             <SkillGroup label="Tools" items={profile.skills.tools} />
