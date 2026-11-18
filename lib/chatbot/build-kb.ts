@@ -1,39 +1,51 @@
-import { getProfile } from '@/lib/profile'
+import { getLocalizedProfile } from '@/lib/profile-i18n'
 import { getAllProjects } from '@/lib/projects'
 import { getCredentialUrl } from '@/lib/issuers'
 import type { Kb, KbDoc } from './types'
 
 /** Server-side only (reads the content folder). Run at build time by app/api/chatbot-kb/route.ts. */
 export function buildKb(): Kb {
-  const profile = getProfile()
+  const { en: profile, id: profileId } = getLocalizedProfile()
   const projects = getAllProjects()
   const docs: KbDoc[] = []
 
-  profile.about
-    .split(/\n{2,}/)
-    .map((p) => p.trim())
-    .filter(Boolean)
-    .forEach((p, i) => {
-      docs.push({ id: `about-${i}`, kind: 'about', title: 'About Thomson', text: p, href: '/about' })
+  const aboutParas = profile.about.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean)
+  const aboutIdParas = profileId.about.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean)
+  aboutParas.forEach((p, i) => {
+    docs.push({
+      id: `about-${i}`,
+      kind: 'about',
+      title: 'About Thomson',
+      text: p,
+      textId: aboutIdParas[i],
+      href: '/about',
     })
+  })
 
   for (const p of projects) {
     docs.push({
       id: `project-${p.slug}`,
       kind: 'project',
       title: p.title,
-      text: [p.title, p.summary, p.category, p.stack.join(' '), p.content].join('. '),
+      text: [p.title, p.summary, p.category, p.stack.join(' '), p.content, p.summaryId, p.contentId]
+        .filter(Boolean)
+        .join('. '),
+      textId: [p.title, p.summaryId, p.contentId, p.category, p.stack.join(' ')].filter(Boolean).join('. '),
       ref: p.slug,
       href: `/projects#${p.slug}`,
     })
   }
 
   profile.experience.forEach((e, i) => {
+    const id = profileId.experience[i]
     docs.push({
       id: `experience-${i}`,
       kind: 'experience',
       title: `${e.role} at ${e.company}`,
       text: [e.role, e.company, e.type, e.period, e.location, e.description, ...(e.highlights ?? [])]
+        .filter(Boolean)
+        .join('. '),
+      textId: [id.role, id.company, id.type, id.period, id.location, id.description, ...(id.highlights ?? [])]
         .filter(Boolean)
         .join('. '),
       ref: String(i),
@@ -42,11 +54,15 @@ export function buildKb(): Kb {
   })
 
   profile.education.forEach((e, i) => {
+    const id = profileId.education[i]
     docs.push({
       id: `education-${i}`,
       kind: 'education',
       title: e.institution,
       text: [e.institution, e.degree, e.period, e.description, ...(e.highlights ?? [])].filter(Boolean).join('. '),
+      textId: [id.institution, id.degree, id.period, id.description, ...(id.highlights ?? [])]
+        .filter(Boolean)
+        .join('. '),
       ref: String(i),
       href: '/about',
     })
@@ -124,19 +140,30 @@ export function buildKb(): Kb {
   return {
     name: profile.name,
     headline: profile.headline,
+    headlineId: profileId.headline,
     about: profile.about,
+    aboutId: profileId.about,
     location: profile.location,
     email: profile.email,
     githubRepos: profile.githubRepos,
     links: profile.links,
-    experience: profile.experience,
-    education: profile.education,
+    experience: profile.experience.map((e, i) => ({
+      ...e,
+      descriptionId: profileId.experience[i]?.description,
+      highlightsId: profileId.experience[i]?.highlights,
+    })),
+    education: profile.education.map((e, i) => ({
+      ...e,
+      descriptionId: profileId.education[i]?.description,
+      highlightsId: profileId.education[i]?.highlights,
+    })),
     certifications,
     skills: profile.skills,
     projects: projects.map((p) => ({
       slug: p.slug,
       title: p.title,
       summary: p.summary,
+      summaryId: p.summaryId,
       category: p.category,
       featured: Boolean(p.featured),
       order: p.order ?? 999,
@@ -146,6 +173,7 @@ export function buildKb(): Kb {
       repoUrl: p.repoUrl,
       demoUrl: p.demoUrl,
       description: p.content,
+      descriptionId: p.contentId,
       mediaCount: p.images.length + p.videos.length,
     })),
     techs,
