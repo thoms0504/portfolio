@@ -28,8 +28,8 @@ list like want need know has have had having ever done`.split(/\s+/)
 
 const ID_STOP = `yang dan di ke dari untuk pada dengan atau itu ini apa siapa bagaimana berapa kapan dimana mana
 adalah ialah saya aku kamu anda dia beliau mereka kami kita bisa dapat akan sudah telah sedang ada tidak bukan juga
-saja lah kah nya tolong mohon boleh punya sebuah suatu para oleh serta agar supaya karena jika kalau lalu kemudian
-sih dong kok ya dong sebutkan sebut lihat tampilkan kasih beri`.split(/\s+/)
+saja aja lah kah nya tolong mohon boleh punya sebuah suatu para oleh serta agar supaya karena jika kalau lalu kemudian
+sih dong kok ya dong sebutkan sebut lihat tampilkan kasih beri pernah`.split(/\s+/)
 
 export const STOPWORDS = new Set<string>([...EN_STOP, ...ID_STOP])
 

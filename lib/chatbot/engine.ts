@@ -13,6 +13,8 @@ import {
 } from './text'
 
 const tr = (lang: Lang, en: string, id: string) => (lang === 'id' ? id : en)
+const pick = (lang: Lang, en?: string, id?: string) => (lang === 'id' ? id ?? en ?? '' : en ?? id ?? '')
+const pickList = (lang: Lang, en?: string[], id?: string[]) => (lang === 'id' && id?.length ? id : en ?? [])
 
 /* ------------------------------------------------------------------ */
 /* Intent patterns (run on the normalised query, English + Indonesian) */
@@ -30,7 +32,7 @@ const RE = {
   botTech:
     /\b(how (does|do) (this|the) (chat ?bot|assistant|bot) work|how (is|was) (this|the) (chat ?bot|assistant) (built|made)|chat ?bot (ini )?(pakai|menggunakan|memakai)|do you use (an )?(api|llm|gpt|ai)|pakai api|which (model|llm)|model apa)\b/,
   contact:
-    /\b(contact|e ?mail|email address|alamat email|reach|hubungi|kontak|whatsapp|wa|linkedin|github|instagram|ig|orcid|get in touch|social media|medsos|phone|telepon|telp|nomor (hp|telepon|telp|wa)|no hp|dm|message him)\b/,
+    /\b(contact|e ?mail|email address|alamat email|reach|\w*hubung\w*|\w*kontak\w*|mengontak\w*|whatsapp|wa|linkedin|github|instagram|ig|orcid|get in touch|social media|medsos|phone|telepon|telp|nomor (hp|telepon|telp|wa)|no hp|dm|message him)\b/,
   sensitive:
     /\b(age|how old|umur|usia|birthday|birth|lahir|salary|gaji|income|penghasilan|home address|alamat rumah|address|married|menikah|istri|wife|girlfriend|pacar|family|keluarga|religion|agama|ktp|nik|password)\b/,
   notCovered: /\b(speak|spoken|fluent|toefl|ielts|hobby|hobbies|hobi|favou?rite|marital|nationality|kewarganegaraan)\b/,
@@ -39,12 +41,12 @@ const RE = {
   generic:
     /^(what is|what s|what are|what does|define|explain|jelaskan|apa itu|apa yang dimaksud|apa arti|arti|how (to|do i|can i|does|do)|bagaimana (cara|membuat)|cara (membuat|menggunakan|install|instal|belajar)|write|tulis|buatkan|generate|create (a|an|me)|solve|selesaikan|hitung|calculate|compare|bandingkan|difference between|perbedaan|why is|why does|kenapa|mengapa|when was|who (is|was|invented|founded|discovered|wrote)|siapa (itu|presiden|penemu)|recommend|rekomendasikan|best way|tips)\b/,
   ownerRef:
-    /\b(thomson|sibuea|he|his|him|you|your|yours|kamu|anda|dia|beliau|portfolio|portofolio|website|site|situs|resume|cv|project|projects|proyek|certificate|certificates|certification|certifications|sertifikat|experience|pengalaman|skill|skills|this|ini|contact|hire|kontak|email|whatsapp|linkedin|github|instagram|reach)\b/,
+    /\b(thomson|sibuea|he|his|him|you|your|yours|kamu|anda|dia|beliau|portfolio|portofolio|website|site|situs|resume|cv|project|projects|proyek|certificate|certificates|certification|certifications|sertifikat|experience|pengalaman|skill|skills|this|ini|contact|hire|\w*hubung\w*|\w*kontak\w*|mengontak\w*|email|whatsapp|linkedin|github|instagram|reach)\b/,
   summary:
     /\b(who is|siapa thomson|about (him|thomson|you|yourself)|tell me about (him|thomson|yourself)|introduce|perkenalkan|ceritakan tentang|profile|profil|summary|ringkasan|bio|background|latar belakang|tentang thomson|tentang dia)\b/,
   location: /\b(where (does|is|do) (he|thomson|you) (live|based|located|from)|where (are|is) (you|he) based|location|lokasi|tinggal (di ?mana|dimana)|domisili|berasal|asal|based in|city|kota)\b/,
   availability:
-    /\b(hire|hiring|available|availability|freelance|open to|collaborat\w*|kolaborasi|lowongan|work with (him|you|thomson)|rekrut|sewa|tersedia|job offer|full ?time)\b/,
+    /\b(hire|hiring|available|availability|freelance|open to|collaborat\w*|kolaborasi|kerja sama|terbuka|lowongan|work with (him|you|thomson)|rekrut|sewa|tersedia|job offer|full ?time)\b/,
   currentJob:
     /\b(current(ly)?|now|present|sekarang|saat ini|kini|today)\b.*\b(job|work|works|role|position|employer|company|kerja|bekerja|jabatan|posisi|perusahaan)\b|\b(where (does|do) (he|you|thomson) work|kerja (di ?mana|dimana)|bekerja (di ?mana|dimana)|jabatan (nya|sekarang)|current (job|role|position)|what (do|does) (you|he|thomson) do|kerja apa|his job|profesi|pekerjaan(nya| dia)?\s*(apa)?$)\b/,
   experience:
@@ -59,7 +61,7 @@ const RE = {
     /\b(does|do|did|can|could|is|are|has|have|apakah|bisa|pernah|punya|menguasai)\b.*\b(know|use|uses|used|using|work with|worked with|experience (with|in)|familiar|proficient|code|program|pakai|memakai|menggunakan|paham|mengerti|bisa)\b/,
   projects:
     /\b(project|projects|proyek|projek|portfolio|portofolio|apps?|aplikasi|dashboard|karya|built|build|made|created|developed|dibuat|membuat|bikin|showcase|demo|repo|repos|repository|repositories)\b/,
-  latest: /\b(latest|newest|recent|recently|terbaru|terakhir|paling baru|baru baru ini|last)\b/,
+  latest: /\b(latest|newest|recent|recently|terbaru\w*|terakhir\w*|paling baru|baru baru ini|last)\b/,
   featured: /\b(featured|best|top|favou?rite|highlight\w*|unggulan|terbaik|andalan|main|utama|notable|proud|impressive)\b/,
   count: /\b(how many|berapa|jumlah|count|total|number of)\b/,
   resume: /\b(resume|cv|curriculum vitae|download|unduh|print|cetak)\b/,
@@ -368,8 +370,8 @@ export function createEngine(kb: Kb): Engine {
 
   function projectCard(lang: Lang, ctx: ChatContext, p: KbProject, full = false): ChatReply {
     const meta = [p.category, periodOf(p)].filter(Boolean).join(' · ')
-    const paras = p.description.split(/\n{2,}/).map((s) => s.trim()).filter(Boolean)
-    const lines = [`**${p.title}**${meta ? ` (${meta})` : ''}`, p.summary]
+    const paras = pick(lang, p.description, p.descriptionId).split(/\n{2,}/).map((s) => s.trim()).filter(Boolean)
+    const lines = [`**${p.title}**${meta ? ` (${meta})` : ''}`, pick(lang, p.summary, p.summaryId)]
     if (full) {
       for (const para of paras) lines.push(truncate(para, 700))
     } else if (paras[1]) {
@@ -387,7 +389,7 @@ export function createEngine(kb: Kb): Engine {
     const shown = ps.slice(0, cap)
     const lines = shown.map((p) => {
       const per = periodOf(p)
-      return `- **${p.title}** (${[p.category, per].filter(Boolean).join(', ')}): ${truncate(p.summary, 110)}`
+      return `- **${p.title}** (${[p.category, per].filter(Boolean).join(', ')}): ${truncate(pick(lang, p.summary, p.summaryId), 110)}`
     })
     if (ps.length > cap)
       lines.push(tr(lang, `...and ${ps.length - cap} more on the Projects page.`, `...dan ${ps.length - cap} lainnya di halaman Projects.`))
@@ -451,7 +453,7 @@ export function createEngine(kb: Kb): Engine {
     const cur = kb.experience.find((e) => /present/i.test(e.period)) ?? kb.experience[0]
     if (!cur) return refuse(lang, ctx)
     const meta = [cur.type, cur.period, cur.location].filter(Boolean).join(', ')
-    const bullets = (cur.highlights ?? []).slice(0, 4).map((h) => `- ${h}`)
+    const bullets = pickList(lang, cur.highlights, cur.highlightsId).slice(0, 4).map((h) => `- ${h}`)
     return mk(
       lang,
       ctx,
@@ -491,7 +493,9 @@ export function createEngine(kb: Kb): Engine {
     const lines = items.map(
       (e) => `- **${e.role}** - ${e.company} (${[e.type, e.period].filter(Boolean).join(', ')})`
     )
-    const extra = items.length === 1 && items[0].highlights?.length ? `\n\n${items[0].highlights.slice(0, 4).map((h) => `- ${h}`).join('\n')}` : ''
+    const one = items.length === 1 ? items[0] : undefined
+    const oneHighlights = one ? pickList(lang, one.highlights, one.highlightsId) : []
+    const extra = oneHighlights.length ? `\n\n${oneHighlights.slice(0, 4).map((h) => `- ${h}`).join('\n')}` : ''
     return mk(
       lang,
       ctx,
@@ -501,7 +505,7 @@ export function createEngine(kb: Kb): Engine {
   }
 
   function answerEducation(lang: Lang, ctx: ChatContext): ChatReply {
-    const lines = kb.education.map((e) => `- **${e.institution}** - ${e.degree} (${e.period})${e.description ? `. ${e.description}` : ''}`)
+    const lines = kb.education.map((e) => `- **${e.institution}** - ${e.degree} (${e.period})${pick(lang, e.description, e.descriptionId) ? `. ${pick(lang, e.description, e.descriptionId)}` : ''}`)
     return mk(lang, ctx, `${tr(lang, `${firstName}'s education:`, `Pendidikan ${firstName}:`)}\n\n${lines.join('\n')}`, {
       links: [{ label: tr(lang, 'About page', 'Halaman About'), href: '/about' }],
       suggestions: addSuggestions(lang, 'work', 'certs', 'projects'),
@@ -516,7 +520,7 @@ export function createEngine(kb: Kb): Engine {
 
   function answerCerts(lang: Lang, ctx: ChatContext, tokens: string[], issuers: string[]): ChatReply {
     const topical = terms(tokens.join(' ')).filter(
-      (t) => !['certification', 'certificate', 'credential', 'license', 'licence', 'course', 'badge', 'training', 'pelatihan', 'kursus', 'sertifikat', 'sertifikasi', 'valid', 'active', 'expired', 'have', 'earn', 'hold', 'own', 'all'].map(stem).includes(t)
+      (t) => !['certification', 'certificate', 'credential', 'license', 'licence', 'course', 'badge', 'training', 'pelatihan', 'kursus', 'sertifikat', 'sertifikasi', 'valid', 'active', 'expired', 'have', 'earn', 'hold', 'own', 'owns', 'owned', 'dimiliki', 'memiliki', 'milik', 'diperoleh', 'didapat', 'all'].map(stem).includes(t)
     )
     let items = kb.certifications
     let note = ''
@@ -645,8 +649,8 @@ export function createEngine(kb: Kb): Engine {
   }
 
   function answerAbout(lang: Lang, ctx: ChatContext): ChatReply {
-    const headline = kb.headline.split(/\.\s/)[0].replace(/\.$/, '')
-    const para = kb.about.split(/\n{2,}/)[0]
+    const headline = pick(lang, kb.headline, kb.headlineId).split(/\.\s/)[0].replace(/\.$/, '')
+    const para = pick(lang, kb.about, kb.aboutId).split(/\n{2,}/)[0]
     return mk(lang, ctx, `**${kb.name}**: ${headline}.\n\n${tr(lang, 'In his own words:', 'Menurut dirinya sendiri:')} "${truncate(para, 360)}"\n\n${tr(lang, `Based in ${kb.location}.`, `Berdomisili di ${kb.location}.`)}`, {
       links: [{ label: 'About', href: '/about' }, { label: 'Resume', href: '/resume' }],
       suggestions: addSuggestions(lang, 'projects', 'work', 'certs'),
@@ -683,7 +687,7 @@ export function createEngine(kb: Kb): Engine {
       .map((h) => projectBySlug.get(h.doc.ref ?? ''))
       .filter((p): p is KbProject => Boolean(p))
     const lead = d.kind === 'about' ? tr(lang, "From Thomson's About page: ", 'Dari halaman About Thomson: ') : ''
-    return mk(lang, ctx, `${lead}${truncate(d.text, 420)}`, {
+    return mk(lang, ctx, `${lead}${truncate(pick(lang, d.text, d.textId), 420)}`, {
       links: [d.href ? { label: d.title, href: d.href } : { label: 'About', href: '/about' }, ...related.map(projectLink)],
     })
   }

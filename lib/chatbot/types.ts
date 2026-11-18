@@ -2,10 +2,22 @@ import type { Certification, Education, Experience, Profile } from '@/types'
 
 export type Lang = 'en' | 'id'
 
+export interface KbExperience extends Experience {
+  descriptionId?: string
+  highlightsId?: string[]
+}
+
+export interface KbEducation extends Education {
+  descriptionId?: string
+  highlightsId?: string[]
+}
+
 export interface KbProject {
   slug: string
   title: string
   summary: string
+  /** Indonesian prose; names and stack stay in English. */
+  summaryId?: string
   category: string
   featured: boolean
   order: number
@@ -16,6 +28,7 @@ export interface KbProject {
   demoUrl?: string
   /** Full MDX body, paragraphs separated by blank lines. */
   description: string
+  descriptionId?: string
   /** Number of screenshots + videos. */
   mediaCount: number
 }
@@ -41,6 +54,8 @@ export interface KbDoc {
   kind: KbDocKind
   title: string
   text: string
+  /** Indonesian version of the same chunk, used when the visitor asks in Indonesian. */
+  textId?: string
   /** Index or slug of the underlying record. */
   ref?: string
   href?: string
@@ -50,13 +65,15 @@ export interface KbDoc {
 export interface Kb {
   name: string
   headline: string
+  headlineId?: string
   about: string
+  aboutId?: string
   location: string
   email: string
   githubRepos?: number
   links: Record<string, string>
-  experience: Experience[]
-  education: Education[]
+  experience: KbExperience[]
+  education: KbEducation[]
   certifications: KbCertification[]
   skills: Profile['skills']
   projects: KbProject[]

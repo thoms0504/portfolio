@@ -2,14 +2,14 @@ import { SIMPLE_ICONS } from './tech-icons'
 
 export type TechCategory = 'language' | 'frontend' | 'backend' | 'database' | 'ai' | 'geo' | 'tools'
 
-export const TECH_CATEGORIES: { key: TechCategory; label: string }[] = [
-  { key: 'language', label: 'Languages' },
-  { key: 'frontend', label: 'Frontend & UI' },
-  { key: 'backend', label: 'Backend' },
-  { key: 'database', label: 'Database' },
-  { key: 'ai', label: 'AI / ML' },
-  { key: 'geo', label: 'Geospatial' },
-  { key: 'tools', label: 'DevOps & Tools' },
+export const TECH_CATEGORIES: { key: TechCategory; label: string; labelId: string }[] = [
+  { key: 'language', label: 'Languages', labelId: 'Bahasa' },
+  { key: 'frontend', label: 'Frontend & UI', labelId: 'Frontend & UI' },
+  { key: 'backend', label: 'Backend', labelId: 'Backend' },
+  { key: 'database', label: 'Database', labelId: 'Database' },
+  { key: 'ai', label: 'AI / ML', labelId: 'AI / ML' },
+  { key: 'geo', label: 'Geospatial', labelId: 'Geospasial' },
+  { key: 'tools', label: 'DevOps & Tools', labelId: 'DevOps & Tools' },
 ]
 
 export interface TechDef {

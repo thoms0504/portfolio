@@ -1,8 +1,12 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import projectTranslations from '@/content/projects.id.json'
 import type { Project, ProjectFrontmatter } from '@/types'
 
+type ProjectTranslation = { summary: string; content: string }
+
+const translations = projectTranslations as Record<string, ProjectTranslation>
 const CONTENT_DIR = path.join(process.cwd(), 'content', 'projects')
 const MEDIA_DIR = path.join(process.cwd(), 'public', 'projects')
 
@@ -60,6 +64,8 @@ export function getProjectBySlug(slug: string): Project | null {
   const media = discoverMedia(slug)
   const filePath = path.join(CONTENT_DIR, `${slug}.mdx`)
 
+  const translation = translations[slug]
+
   if (!fs.existsSync(filePath)) {
     // A folder without an MDX file still shows up, flagged as not yet described.
     if (!fs.existsSync(path.join(MEDIA_DIR, slug))) return null
@@ -67,11 +73,13 @@ export function getProjectBySlug(slug: string): Project | null {
       title: titleFromSlug(slug),
       slug,
       summary: '',
+      summaryId: translation?.summary,
       category: 'Other',
       featured: false,
       period: { start: '', end: '' },
       stack: [],
       content: '',
+      contentId: translation?.content,
       images: media.images,
       videos: media.videos,
       cover: media.images[0] ?? '',
@@ -88,6 +96,8 @@ export function getProjectBySlug(slug: string): Project | null {
     period: fm.period ?? { start: '', end: '' },
     stack: fm.stack ?? [],
     content: content.trim(),
+    summaryId: translation?.summary,
+    contentId: translation?.content,
     images: media.images,
     videos: media.videos,
     cover: media.images[0] ?? '',
