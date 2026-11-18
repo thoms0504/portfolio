@@ -15,6 +15,9 @@ export interface ProjectFrontmatter {
 export interface Project extends ProjectFrontmatter {
   /** Short description (1-2 paragraphs) from the MDX body. */
   content: string
+  /** Indonesian prose for the summary and body; titles, stack and credential names stay in English. */
+  summaryId?: string
+  contentId?: string
   /** Screenshots discovered in public/projects/<slug>/ (URL-encoded paths). */
   images: string[]
   /** Videos discovered in public/projects/<slug>/ (URL-encoded paths). */
@@ -56,6 +59,14 @@ export interface Certification {
   credentialId?: string
   /** Link to verify the credential. */
   credentialUrl?: string
+}
+
+/** Only the prose fields are translated; roles, tech stack and credential names stay in English. */
+export interface ProfileTranslation {
+  headline?: string
+  about?: string
+  experience?: { description?: string; highlights?: string[] }[]
+  education?: { description?: string; highlights?: string[] }[]
 }
 
 export interface Profile {
